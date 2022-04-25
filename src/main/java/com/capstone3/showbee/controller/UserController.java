@@ -48,8 +48,9 @@ public class UserController {
     @ApiOperation(value = "회원 수정", notes = "회원 정보 수정")
     @PutMapping(value = "/user")
     public SingleResult<User> modify(@ApiParam(value = "회원번호", required = true) @RequestParam Long id,
-                                     @ApiParam(value = "회원이름", required = true) @RequestParam String name){
-        User user = User.builder().id(id).name(name).build();
+                                     @ApiParam(value = "회원이름", required = true) @RequestParam String name,
+                                        @RequestParam String password){
+        User user = User.builder().id(id).name(name).password(password).build();
         return responseService.getSingleResult(userJpaRepository.save(user));
     }
 
