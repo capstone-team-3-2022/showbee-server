@@ -8,17 +8,16 @@ import com.capstone3.showbee.jwt.JwtTokenProvider;
 import com.capstone3.showbee.model.CommonResult;
 import com.capstone3.showbee.model.SingleResult;
 import com.capstone3.showbee.repository.UserJpaRepository;
+import com.capstone3.showbee.service.CustomUserDetailService;
 import com.capstone3.showbee.service.ResponseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.ValidationAnnotationUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 
@@ -32,6 +31,8 @@ public class SignController {
     private final JwtTokenProvider jwtTokenProvider;
     private final ResponseService responseService;
     private final PasswordEncoder passwordEncoder;
+    private final CustomUserDetailService userService;
+
 
     @ApiOperation(value = "로그인", notes = "이메일로 회원 로그인 ")
     @PostMapping(value = "/signin")
@@ -51,11 +52,15 @@ public class SignController {
 
 
         if(userJpaRepository.findByEmail(email).isPresent()){
-            throw new CUserExistException();
+            throw new CUserExistException(); //존재하면 가입 X
         }
         userJpaRepository.save(User.builder()
         .email(email).password(passwordEncoder.encode(password)).name(name).roles(Collections.singletonList("ROLE_USER")).build());
         return responseService.getSuccessResult();
     }
 
+    @GetMapping("check/{email}/exist") //버튼 눌러서 중복 확인 중복이면 true
+    public ResponseEntity<Boolean> checkEmailDuplicate(@PathVariable String email){
+        return ResponseEntity.ok(userService.checkEmailDuplicate(email));
+    }
 }
