@@ -59,7 +59,7 @@ public class SignController {
         return responseService.getSuccessResult();
     }
 
-    @GetMapping("check/{email}/exist") //버튼 눌러서 중복 확인 중복이면 true
+    @GetMapping("check/{email}") //버튼 눌러서 중복 확인 중복이면 true
     public ResponseEntity<Boolean> checkEmailDuplicate(@PathVariable String email){
         return ResponseEntity.ok(userService.checkEmailDuplicate(email));
     }
