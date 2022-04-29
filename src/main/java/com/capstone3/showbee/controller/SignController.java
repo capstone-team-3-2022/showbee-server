@@ -3,6 +3,7 @@ package com.capstone3.showbee.controller;
 
 import com.capstone3.showbee.entity.User;
 import com.capstone3.showbee.exception.CEmailSigninFailedException;
+import com.capstone3.showbee.exception.CUserExistException;
 import com.capstone3.showbee.jwt.JwtTokenProvider;
 import com.capstone3.showbee.model.CommonResult;
 import com.capstone3.showbee.model.SingleResult;
@@ -47,6 +48,11 @@ public class SignController {
     public CommonResult signin(@ApiParam(value = "회원 id: 이메일", required = true) @RequestParam String email,
                                @ApiParam(value = "비밀번호", required = true) @RequestParam String password,
                                @ApiParam(value = "이름(닉네임)", required = true) @RequestParam String name){
+
+
+        if(userJpaRepository.findByEmail(email).isPresent()){
+            throw new CUserExistException();
+        }
         userJpaRepository.save(User.builder()
         .email(email).password(passwordEncoder.encode(password)).name(name).roles(Collections.singletonList("ROLE_USER")).build());
         return responseService.getSuccessResult();

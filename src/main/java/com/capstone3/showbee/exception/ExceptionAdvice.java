@@ -1,5 +1,6 @@
 package com.capstone3.showbee.exception;
 
+import com.capstone3.showbee.model.CommonResult;
 import com.capstone3.showbee.service.ResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
@@ -75,6 +76,11 @@ public class ExceptionAdvice {
 //    private String getMessage(String code, Object[] args){
 //        return messageSource.getMessage(code, args);
 //    }
+    @ExceptionHandler(CUserExistException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String communicationException(HttpServletRequest request, CUserExistException e) {
+        return "이미 존재하는 이메일 입니다.";
+    }
 
 }
 
