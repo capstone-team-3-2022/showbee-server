@@ -89,13 +89,19 @@ port: 8081
 - 형식: POST
 - Parameter: stitle(String), content(String), price(int), date(Date), cycle(int), shared(boolean)
 - 주소: v1/schedule/post
-- 파라미터 db 참고
+- 파라미터 설명 db 테이블 참고
     
 ### lists
 - 형식:GET
 - 일정 리스트 반환(모두)
 - Param 없음
 - 주소: v1/schedule/lists
+- return: List
 
-    
+### get
+- 형식: GET
+- Parameter 없음
+- 주소: v1/schedule/get
+- 로그인한 유저의 일정 조회
+- 반환: List
 
