@@ -1,6 +1,7 @@
 package com.capstone3.showbee.entity;
 
 import lombok.Builder;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -10,6 +11,7 @@ public class ScheduleDTO {
     private String stitle;
     private String content;
     private Integer price;
+    @DateTimeFormat(pattern = "MM-dd")
     private Date date;
     private Boolean shared;
     private Integer cycle;

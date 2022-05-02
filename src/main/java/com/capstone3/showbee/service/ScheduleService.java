@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 //@RequiredArgsConstructor
 @Service
@@ -19,16 +20,21 @@ import javax.servlet.http.HttpServletRequest;
 public class ScheduleService {
     private final JwtTokenProvider jwtTokenProvider;
     private final ScheduleRepository scheduleRepository;
+    private final UserService userService;
 
     @Transactional
     public Long save(HttpServletRequest request, final ScheduleDTO scheduleDTO){
-        String token = jwtTokenProvider.resolveToken(request);
-        Authentication authentication = jwtTokenProvider.getAuthentication(token);
-
-        User loginUser = (User) authentication.getPrincipal();
+        User loginUser = userService.getUser(request);
 
         return scheduleRepository.save(scheduleDTO.toEntity(loginUser)).getSId();
     }
+
+
+    public List<Schedule> findAllByUser(HttpServletRequest request){
+        User loginUser = userService.getUser(request);
+        return scheduleRepository.findAllByUser(loginUser);
+    }
+
 
 
 }

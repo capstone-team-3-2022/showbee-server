@@ -34,5 +34,8 @@ public class ScheduleController {
     }
 
 
-
+    @GetMapping("/get")
+    public ListResult<Schedule> getlist(HttpServletRequest request){
+        return responseService.getListResult(scheduleService.findAllByUser(request));
+    }
 }
