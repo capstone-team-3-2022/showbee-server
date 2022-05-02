@@ -85,13 +85,13 @@ port: 8081
 - 아직 미완료!!!
 
 ## Schedule
-## post
+### post
 - 형식: POST
 - Parameter: stitle(String), content(String), price(int), date(Date), cycle(int), shared(boolean)
 - 주소: v1/schedule/post
 - 파라미터 db 참고
     
-## lists
+### lists
 - 형식:GET
 - 일정 리스트 반환(모두)
 - Param 없음
