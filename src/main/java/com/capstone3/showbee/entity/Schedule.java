@@ -26,9 +26,6 @@ public class Schedule {
 //    @ManyToMany(fetch = FetchType.EAGER)
 //    private List<User> participant;
 
-//    @OneToMany
-//    private List<Shared> sharedsch;
-
     @Builder
     public Schedule(User user, String stitle, String content, Integer price, Date date, Integer cycle, Boolean shared) {
         this.content = content;

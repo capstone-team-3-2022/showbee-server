@@ -36,7 +36,6 @@ public class FinancialController {
     @DeleteMapping(value = "/delete/{fid}")
     public CommonResult delete(@PathVariable Long fid) {
         financialRepository.deleteById(fid);
-
         return responseService.getSuccessResult();
     }
 
