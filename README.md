@@ -88,10 +88,14 @@ port: 8081
     Date 형식: MM-dd
 ### post
 - 형식: POST
-- Parameter: stitle(String), content(String), price(int), date(Date), cycle(int), shared(boolean)
+- Parameter: stitle(String), content(String), price(int), date(Date), cycle(int), shared(boolean), participant(List)
 - 주소: v1/schedule/post
 - Header에 유저 로그인 토큰 필요
 - 파라미터 설명 db 테이블 참고
+- 참가자는 이메일(중복안되는거)로 넘겨주세요!! 여러명이니까 list가 편할 것 같아서 리스트로 넣었습니다
+- shared(boolean)은 참가자 있을 때 true로 넘겨주면 됨
+- 아직 예외처리 안함
+    
     
 ### lists
 - 형식:GET
