@@ -107,3 +107,32 @@ port: 8081
 - 로그인한 유저의 일정 조회
 - 반환: List
 
+### delete
+- 형식: DELETE
+- Parameter: fid    
+- 주소: v1/schedule/delete/{sid}
+- 가계부 고유 키(sid)로 삭제
+    
+## Financial
+    : 가계부
+    date 형식: yyyy-MM-dd
+
+### post
+- 형식: POST
+- Parameter: date, content, price, category
+- 주소: v1/financial/post
+- Header에 유저 로그인 토큰 필요
+- 가계부 등록
+
+### list
+- 형식: GET
+- Header에 로그인 토큰 필요
+- 주소: v1/financial/lists
+- 로그인한 유저의 가계부 조회
+- 반환: list
+
+### delete
+- 형식: DELETE
+- Parameter: fid    
+- 주소: v1/financial/delete/{fid}
+- 가계부 고유 키(fid)로 삭제
