@@ -11,7 +11,6 @@ import java.util.List;
 @Entity
 @Table(name = "Schedule")
 @NoArgsConstructor
-
 public class Schedule {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sId;
@@ -23,9 +22,12 @@ public class Schedule {
     private Boolean shared;
     private Integer cycle;
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private User user; //일정 추가한 사람
 //    @ManyToMany(fetch = FetchType.EAGER)
 //    private List<User> participant;
+
+//    @OneToMany
+//    private List<Shared> sharedsch;
 
     @Builder
     public Schedule(User user, String stitle, String content, Integer price, Date date, Integer cycle, Boolean shared) {
