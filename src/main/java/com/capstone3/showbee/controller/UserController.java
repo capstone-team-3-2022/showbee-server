@@ -22,7 +22,7 @@ import java.util.Collections;
 @Secured("ROLE_USER")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/user")
 public class UserController {
 
     private final UserJpaRepository userJpaRepository;
@@ -30,26 +30,44 @@ public class UserController {
     private final ResponseService responseService; //결과를 처리할 Service
     private final PasswordEncoder passwordEncoder;
 
-    @GetMapping(value = "/users") //전체 회원 조회
+    @GetMapping(value = "/getall") //전체 회원 조회
     public ListResult<User> findAllUser(){
         return responseService.getListResult(userJpaRepository.findAll());
     }
 
-    @GetMapping(value = "/user") //조회
+    @GetMapping(value = "/get") //조회
     public SingleResult<User> findUser(HttpServletRequest request){
         User loginUser = userService.getUser(request);
         return responseService.getSingleResult(userJpaRepository.findByEmail(loginUser.getEmail()).orElseThrow(CUserNotFoundException::new));
     }
 
-    @PutMapping(value = "/user")
-    public SingleResult<User> modify(HttpServletRequest request, @RequestParam String name, @RequestParam String password){
+    @PutMapping(value = "/modify/name")
+    public SingleResult<User> modifyName(HttpServletRequest request, @RequestParam String name){
         User loginUser = userService.getUser(request);
-        User user = User.builder().id(loginUser.getId()).name(name).email(loginUser.getEmail()).password(passwordEncoder.encode(password)).roles(Collections.singletonList("ROLE_USER")).build();
+        User user = User.builder()
+                        .id(loginUser.getId()).name(name).email(loginUser.getEmail()).password(passwordEncoder.encode(loginUser.getPassword()))
+                        .roles(Collections.singletonList("ROLE_USER")).build();
         return responseService.getSingleResult(userJpaRepository.save(user));
     }
 
-    @DeleteMapping(value = "/user/{id}")
-    public CommonResult delete(@PathVariable Long id){
+    @PutMapping(value = "/modify/pwd")
+    public SingleResult<User> modifyPwd(HttpServletRequest request, @RequestParam String password){
+        User loginUser = userService.getUser(request);
+        User user = User.builder()
+                        .id(loginUser.getId()).name(loginUser.getName()).email(loginUser.getEmail()).password(passwordEncoder.encode(password))
+                        .roles(Collections.singletonList("ROLE_USER")).build();
+        return responseService.getSingleResult(userJpaRepository.save(user));
+    }
+    @DeleteMapping(value = "/delete")
+    public CommonResult delete(HttpServletRequest request){
+        User user = userService.getUser(request);
+        userJpaRepository.deleteById(user.getId());
+        return responseService.getSuccessResult();
+    }
+
+    
+    @DeleteMapping(value = "/delete/{id}")
+    public CommonResult deleteById(@PathVariable Long id){
         userJpaRepository.deleteById(id);
         return responseService.getSuccessResult();
     }

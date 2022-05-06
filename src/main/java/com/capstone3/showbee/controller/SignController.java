@@ -43,7 +43,7 @@ public class SignController {
 
         return responseService.getSingleResult(jwtTokenProvider.createToken(String.valueOf(user.getId()), user.getRoles()));
     }
-    @ApiOperation(value = "가입", notes = "회원가입을 한다.")
+
     @PostMapping(value = "/signup")
     public CommonResult signin(@ApiParam(value = "회원 id: 이메일", required = true) @RequestParam String email,
                                @ApiParam(value = "비밀번호", required = true) @RequestParam String password,
