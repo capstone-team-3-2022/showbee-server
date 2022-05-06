@@ -37,7 +37,6 @@ public class ScheduleService {
                 sharedRepository.save(sh);
             }
         }
-
         return sch.getSId();
     }
 
