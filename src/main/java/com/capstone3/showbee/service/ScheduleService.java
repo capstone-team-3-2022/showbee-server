@@ -31,9 +31,11 @@ public class ScheduleService {
     public Long save(HttpServletRequest request, final ScheduleDTO scheduleDTO){
         User loginUser = userService.getUser(request);
         Schedule sch = scheduleRepository.save(scheduleDTO.toEntity(loginUser));
-        for (String email: scheduleDTO.getParticipant()){
-            Shared sh = Shared.builder().user(userJpaRepository.findByEmail(email).get()).schedule(sch).build();
-            sharedRepository.save(sh);
+        if(scheduleDTO.toEntity(loginUser).getShared()){
+            for (String email: scheduleDTO.getParticipant()){
+                Shared sh = Shared.builder().user(userJpaRepository.findByEmail(email).get()).schedule(sch).build();
+                sharedRepository.save(sh);
+            }
         }
 
         return sch.getSId();

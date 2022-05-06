@@ -16,14 +16,13 @@ public class UserService {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-
     @Transactional
     public User getUser(HttpServletRequest request){
         String token = jwtTokenProvider.resolveToken(request);
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
 
-        User loginUser = (User) authentication.getPrincipal();
-
-        return loginUser;
+        return (User) authentication.getPrincipal();
     }
+
+
 }
