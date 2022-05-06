@@ -1,16 +1,18 @@
 # Showbee
 ## Capstone3 Project
 
+## DB table
+
 | User | 타입 | 설명 |
 | --- | --- | --- |
 | id(key) | long | id |
 | email | String | 이메일 |
-| pw | String | 비밀번호 |
+| password | String | 비밀번호 |
 | name | String | 닉네임 |
 
 | Shared | 타입 | 설명 |
 | --- | --- | --- |
-| participant | List | 참가자 |
+| uId | long | 참가자 |
 | id(key) | long |  |
 | id(Schedule) | long | 일정 id 값 |
 
@@ -20,8 +22,7 @@
 | price | Integer | 금액 |
 | content | String | 내용(사용자 작성) |
 | date | Date | 날짜 |
-| cycle | Integer? | 반복 주기 |
-| participant | List<User> | 참가자(공유) |
+| cycle | Integer | 반복 주기 |
 | category | String |  |
 | shared | boolean | 공유여부 |
 | uId | long | 유저 |
@@ -34,14 +35,16 @@
 | content | String | 내용 |
 | category | String |  |
 
+
+----
 ## Server
-
 ip address: 117.17.102.143
-
+    
 port: 8081
-
+    
 주소
 117.17.102.143:8081/
+    
 
 ## User
 ### Sign up(회원가입)
@@ -49,7 +52,6 @@ port: 8081
 - Parameter: email, name, password
 - 주소: v1/signup
 - 117.17.102.143:8081/v1/signup?email={email}&name={name}&password={password}
-    
     
     #### 이메일 중복체크
     - 형식: GET
@@ -67,25 +69,31 @@ port: 8081
 - 형식: GET
 - Parameter: 없음
 - Header에 “X-AUTH-TOKEN” value에 로그인 했을 때의 token 값 넣기
-- 주소: v1/user
-- 117.17.102.143:8081/v1/user
+- 주소: v1/user/get
 - user 정보 반환
 
 ### 삭제
 - 형식: DELETE
-- Parameter: id
-- 주소: v1/user/{id}
-- 117.17.102.143:8081/v1/user/{id}
+- Parameter: 없음
+- 주소: v1/user/delete
+- Header에 토큰 필요
 - 해당 id 유저 삭제
+    
 
 ### 수정
 - 형식: PUT
-- Parameter: name, password (수정 가능한 정보만)
-- 주소: v1/user
-- 수정하지 않는 기존 정보는 그대로 받아와서 넘겨줘야 함
 - Header에 token 필요
 - 회원 정보 수정
 
+    #### 닉네임(name) 수정
+    - Parameter: name
+    - 주소: v1/user/modify/name
+    
+    #### 비밀번호(pwd) 수정
+    - Parameter: password
+    - 주소: v1/user/modify/pwd
+    
+    
 ## Schedule
     Date 형식: MM-dd
 ### post
