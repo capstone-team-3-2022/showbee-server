@@ -80,9 +80,11 @@ port: 8081
 
 ### 수정
 - 형식: PUT
+- Parameter: name, password (수정 가능한 정보만)
 - 주소: v1/user
-- 정보 수정
-- 아직 미완료!!!
+- 수정하지 않는 기존 정보는 그대로 받아와서 넘겨줘야 함
+- Header에 token 필요
+- 회원 정보 수정
 
 ## Schedule
     Date 형식: MM-dd
