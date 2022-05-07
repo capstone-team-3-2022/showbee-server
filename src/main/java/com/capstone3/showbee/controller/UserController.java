@@ -45,7 +45,7 @@ public class UserController {
     public SingleResult<User> modifyName(HttpServletRequest request, @RequestParam String name){
         User loginUser = userService.getUser(request);
         User user = User.builder()
-                        .id(loginUser.getId()).name(name).email(loginUser.getEmail()).password(passwordEncoder.encode(loginUser.getPassword()))
+                        .id(loginUser.getId()).name(name).email(loginUser.getEmail()).password(loginUser.getPassword())
                         .roles(Collections.singletonList("ROLE_USER")).build();
         return responseService.getSingleResult(userJpaRepository.save(user));
     }
@@ -58,6 +58,8 @@ public class UserController {
                         .roles(Collections.singletonList("ROLE_USER")).build();
         return responseService.getSingleResult(userJpaRepository.save(user));
     }
+
+
     @DeleteMapping(value = "/delete")
     public CommonResult delete(HttpServletRequest request){
         User user = userService.getUser(request);
@@ -65,7 +67,7 @@ public class UserController {
         return responseService.getSuccessResult();
     }
 
-    
+
     @DeleteMapping(value = "/delete/{id}")
     public CommonResult deleteById(@PathVariable Long id){
         userJpaRepository.deleteById(id);
