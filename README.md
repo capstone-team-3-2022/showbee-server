@@ -47,6 +47,9 @@ port: 8081
     
 
 ## User
+- Header에 “X-AUTH-TOKEN” value에 로그인 했을 때의 token 값 넣기
+
+
 ### Sign up(회원가입)
 - 형식: POST
 - Parameter: email, name, password
@@ -68,27 +71,28 @@ port: 8081
 ### 조회
 - 형식: GET
 - Parameter: 없음
-- Header에 “X-AUTH-TOKEN” value에 로그인 했을 때의 token 값 넣기
 - 주소: v1/user/get
 - user 정보 반환
+    #### email로 찾기
+    - 형식: GET
+    - 주소: v1/user/get/{email}
+    - Parameter: email
+    - email로 사용자 검색 후 반환
 
 ### 삭제
 - 형식: DELETE
 - Parameter: 없음
 - 주소: v1/user/delete
 - Header에 토큰 필요
-- 해당 id 유저 삭제
-    
+- 현재 로그인된 유저 삭제
 
 ### 수정
 - 형식: PUT
 - Header에 token 필요
 - 회원 정보 수정
-
     #### 닉네임(name) 수정
     - Parameter: name
     - 주소: v1/user/modify/name
-    
     #### 비밀번호(pwd) 수정
     - Parameter: password
     - 주소: v1/user/modify/pwd
