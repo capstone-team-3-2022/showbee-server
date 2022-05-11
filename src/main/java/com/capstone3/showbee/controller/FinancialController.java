@@ -4,6 +4,7 @@ import com.capstone3.showbee.entity.Financial;
 import com.capstone3.showbee.entity.FinancialDTO;
 import com.capstone3.showbee.model.CommonResult;
 import com.capstone3.showbee.model.ListResult;
+import com.capstone3.showbee.model.SingleResult;
 import com.capstone3.showbee.repository.FinancialRepository;
 import com.capstone3.showbee.service.FinancialService;
 import com.capstone3.showbee.service.ResponseService;
@@ -32,6 +33,12 @@ public class FinancialController {
     public Long postFin(HttpServletRequest request, @RequestBody final FinancialDTO financialDTO) {
         return financialService.save(request, financialDTO);
     }
+
+//    @PutMapping(value="/modify")
+//    public SingleResult<Financial> modifyFinancial(HttpServletRequest request, @RequestBody final FinancialDTO financialDTO, long fid){
+//        financialService.update(financialDTO, fid);
+//    }
+
 
     @DeleteMapping(value = "/delete/{fid}")
     public CommonResult delete(@PathVariable Long fid) {

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -31,4 +32,12 @@ public class FinancialService {
         return financialRepository.save(financialDTO.toEntity(loginUser)).getFid();
     }
 
+    public void modify(FinancialDTO financialDTO, HttpServletRequest request){
+        Long fid = financialDTO.getFid();
+        Optional<Financial> result = financialRepository.findById(fid);
+        if(result.isPresent()){
+            User loginUser = userService.getUser(request);
+            financialRepository.save(financialDTO.toEntity(loginUser));
+        }
+    }
 }

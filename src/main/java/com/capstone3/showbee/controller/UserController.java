@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
+import java.util.Optional;
 
-@Secured("ROLE_USER")
+//@Secured("ROLE_USER")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/v1/user")
@@ -41,9 +42,15 @@ public class UserController {
         return responseService.getSingleResult(userJpaRepository.findByEmail(loginUser.getEmail()).orElseThrow(CUserNotFoundException::new));
     }
 
+    @GetMapping(value = "/get/{email}")
+    public SingleResult<User> findUserByEmail(@PathVariable String email){
+        return responseService.getSingleResult(userJpaRepository.findByEmail(email).orElseThrow(CUserNotFoundException::new));
+    }
+
     @PutMapping(value = "/modify/name")
     public SingleResult<User> modifyName(HttpServletRequest request, @RequestParam String name){
         User loginUser = userService.getUser(request);
+        System.out.println("password: "+loginUser.getPassword());
         User user = User.builder()
                         .id(loginUser.getId()).name(name).email(loginUser.getEmail()).password(loginUser.getPassword())
                         .roles(Collections.singletonList("ROLE_USER")).build();
