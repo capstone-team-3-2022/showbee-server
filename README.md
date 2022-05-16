@@ -125,6 +125,13 @@ port: 8081
 - 로그인한 유저의 일정 조회
 - 반환: List
 
+### modify
+- 형식: PUT
+- Parmeter: post와 동일
+- 주소: v1/schedule/modify
+- Header에 로그인 토큰 필요
+- 변경하지 않은 것도 그대로 받아와서 등록과 똑같은 파라미터로 넘겨주세요
+
 ### delete
 - 형식: DELETE
 - Parameter: fid    
@@ -148,6 +155,14 @@ port: 8081
 - 주소: v1/financial/lists
 - 로그인한 유저의 가계부 조회
 - 반환: list
+
+
+### modify
+- 형식: PUT
+- Parameter: date, content, price, category
+- Header에 로그인 토큰 필요
+- 주소: v1/financial/lists
+- 기존 내용은 유지한 채로 등록과 같은 파라미터 넘겨주기
 
 ### delete
 - 형식: DELETE
