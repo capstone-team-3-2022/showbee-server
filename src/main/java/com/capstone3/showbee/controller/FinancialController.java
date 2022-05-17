@@ -34,17 +34,15 @@ public class FinancialController {
         return financialService.save(request, financialDTO);
     }
 
-//    @PutMapping(value="/modify")
-//    public SingleResult<Financial> modifyFinancial(HttpServletRequest request, @RequestBody final FinancialDTO financialDTO, long fid){
-//        financialService.update(financialDTO, fid);
-//    }
-
-
     @DeleteMapping(value = "/delete/{fid}")
     public CommonResult delete(@PathVariable Long fid) {
         financialRepository.deleteById(fid);
         return responseService.getSuccessResult();
     }
 
+//    @PutMapping(value="/modify")
+//    public SingleResult<Financial> modifyFinancial(HttpServletRequest request, @RequestBody final FinancialDTO financialDTO, long fid){
+//        financialService.update(financialDTO, fid);
+//    }
 
 }

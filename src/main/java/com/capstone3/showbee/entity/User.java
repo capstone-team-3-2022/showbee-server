@@ -24,9 +24,11 @@ import java.util.stream.Collectors;
 public class User implements UserDetails { //SpringSecurity 보안 적용을 위해 UserDetails를 상속받아 추가 정보 재정의
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)

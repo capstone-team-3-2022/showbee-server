@@ -33,10 +33,8 @@ public class SignController {
     private final PasswordEncoder passwordEncoder;
     private final CustomUserDetailService userService;
 
-    @ApiOperation(value = "로그인", notes = "이메일로 회원 로그인 ")
     @PostMapping(value = "/signin")
-    public SingleResult<String> signin(@ApiParam(value = "회원  id: 이메일", required = true) @RequestParam String email,
-                                       @ApiParam(value = "비밀번호", required = true) @RequestParam String password) {
+    public SingleResult<String> signin(@RequestParam String email, @RequestParam String password) {
         User user = userJpaRepository.findByEmail(email).orElseThrow(CEmailSigninFailedException::new);
         if (!passwordEncoder.matches(password, user.getPassword()))
             throw new CEmailSigninFailedException();
@@ -45,9 +43,7 @@ public class SignController {
     }
 
     @PostMapping(value = "/signup")
-    public CommonResult signin(@ApiParam(value = "회원 id: 이메일", required = true) @RequestParam String email,
-                               @ApiParam(value = "비밀번호", required = true) @RequestParam String password,
-                               @ApiParam(value = "이름(닉네임)", required = true) @RequestParam String name){
+    public CommonResult signin(@RequestParam String email, @RequestParam String password, @RequestParam String name){
         if(userJpaRepository.findByEmail(email).isPresent()){
             throw new CUserExistException(); //존재하면 가입 X
         }
