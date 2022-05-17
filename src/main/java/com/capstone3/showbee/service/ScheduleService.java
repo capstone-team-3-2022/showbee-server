@@ -29,7 +29,7 @@ public class ScheduleService {
     private final UserJpaRepository userJpaRepository;
 
     @Transactional
-    public Long save(HttpServletRequest request, final ScheduleDTO scheduleDTO) throws ParseException {
+    public Schedule save(HttpServletRequest request, final ScheduleDTO scheduleDTO) throws ParseException {
         User loginUser = userService.getUser(request);
         Schedule sch = scheduleRepository.save(scheduleDTO.toEntity(loginUser));
         if(scheduleDTO.toEntity(loginUser).getShared()){
@@ -38,7 +38,7 @@ public class ScheduleService {
                 sharedRepository.save(sh);
             }
         }
-        return sch.getSId();
+        return sch;
     }
 
 

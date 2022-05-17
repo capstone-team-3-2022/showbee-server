@@ -16,7 +16,6 @@ import javax.persistence.*;
 public class Shared {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     private User user; //참가자
     @ManyToOne

@@ -15,7 +15,8 @@ public class ScheduleDTO {
     private String stitle;
     private String content;
     private Integer price;
-    private String date;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date date;
     private Boolean shared;
     private Integer cycle;
     private String category;
@@ -24,13 +25,13 @@ public class ScheduleDTO {
 
     public Schedule toEntity(User user) throws ParseException {
         return Schedule.builder()
-                .content(content).user(user).price(price).date(new SimpleDateFormat("MM-dd").parse(date)).cycle(cycle).shared(shared).stitle(stitle).category(category)
+                .content(content).user(user).price(price).date(date).cycle(cycle).shared(shared).stitle(stitle).category(category)
                 .build();
     }
 
 
     @Builder
-    public ScheduleDTO(String stitle, String category, String content, Integer price, String date, Integer cycle, Boolean shared, List<String> participant) {
+    public ScheduleDTO(String stitle, String category, String content, Integer price, Date date, Integer cycle, Boolean shared, List<String> participant) {
         this.content = content;
         this.price = price;
         this.date = date;

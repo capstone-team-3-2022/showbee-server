@@ -5,6 +5,7 @@ import com.capstone3.showbee.entity.ScheduleDTO;
 import com.capstone3.showbee.entity.User;
 import com.capstone3.showbee.model.CommonResult;
 import com.capstone3.showbee.model.ListResult;
+import com.capstone3.showbee.model.SingleResult;
 import com.capstone3.showbee.repository.ScheduleRepository;
 import com.capstone3.showbee.service.ResponseService;
 import com.capstone3.showbee.service.ScheduleService;
@@ -30,8 +31,8 @@ public class ScheduleController {
     }
 
     @PostMapping(value="/post")
-    public Long postSch(HttpServletRequest request, @RequestBody final ScheduleDTO scheduleDTO) throws ParseException {
-        return scheduleService.save(request, scheduleDTO);
+    public SingleResult<Schedule> postSch(HttpServletRequest request, @RequestBody final ScheduleDTO scheduleDTO) throws ParseException {
+        return responseService.getSingleResult(scheduleService.save(request, scheduleDTO)) ;
     }
 
 
@@ -45,4 +46,5 @@ public class ScheduleController {
         scheduleRepository.deleteById(sid);
         return responseService.getSuccessResult();
     }
+
 }

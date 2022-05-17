@@ -25,8 +25,8 @@ public class Schedule {
     private String category;
     @ManyToOne(fetch = FetchType.LAZY)
     private User user; //일정 추가한 사람
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<User> participant;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Shared> participant;
 
     @Builder
     public Schedule(User user, String category, String stitle, String content, Integer price, Date date, Integer cycle, Boolean shared) {
