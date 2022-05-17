@@ -22,7 +22,6 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ScheduleService {
-    private final JwtTokenProvider jwtTokenProvider;
     private final ScheduleRepository scheduleRepository;
     private final SharedRepository sharedRepository;
     private final UserService userService;
@@ -47,5 +46,16 @@ public class ScheduleService {
         return scheduleRepository.findAllByUser(loginUser);
     }
 
-
+    public List<Schedule> findAll(HttpServletRequest request){
+        List<Schedule> result =  findAllByUser(request);
+        User loginUser = userService.getUser(request);
+//        System.out.println("result: "+ sharedRepository.findAllByUser(loginUser));
+        List<Shared> sresult =  sharedRepository.findAllByUser(loginUser);
+        for(Shared sh: sresult){
+            Schedule schedule = sh.getSchedule();
+            result.add(schedule);
+        }
+//        result.addAll(sresult);
+        return result;
+    }
 }

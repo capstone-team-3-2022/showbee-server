@@ -1,5 +1,6 @@
 package com.capstone3.showbee.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -24,9 +25,10 @@ public class Schedule {
     private Integer cycle;
     private String category;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private User user; //일정 추가한 사람
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Shared> participant;
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private List<Shared> participant;
 
     @Builder
     public Schedule(User user, String category, String stitle, String content, Integer price, Date date, Integer cycle, Boolean shared) {
@@ -38,10 +40,6 @@ public class Schedule {
         this.stitle = stitle;
         this.user = user;
         this.category = category;
-    }
-
-    public void updateContent(String content){
-        this.content = content;
     }
 
 
