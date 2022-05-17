@@ -24,15 +24,9 @@ public class ExceptionAdvice {
 
 //    @ExceptionHandler(Exception.class)
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-//    protected CommonResult defaultException(HttpServletRequest request, Exception e){
-//        return responseService.getFailResult(Integer.valueOf(getMessage("unKnown.code")), getMessage("unKnown.msg"));
+//    protected String defaultException(HttpServletRequest request, Exception e){
+//        return "알 수 없는 오류가 발생했습니다.";
 //    }
-
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected String defaultException(HttpServletRequest request, Exception e){
-        return "알 수 없는 오류가 발생했습니다.";
-    }
 
 //    @ExceptionHandler(CEmailSigninFailedException.class)
 //    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

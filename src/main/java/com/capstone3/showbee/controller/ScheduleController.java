@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 
 @RestController
 @RequestMapping(value="v1/schedule")
@@ -29,7 +30,7 @@ public class ScheduleController {
     }
 
     @PostMapping(value="/post")
-    public Long postSch(HttpServletRequest request, @RequestBody final ScheduleDTO scheduleDTO){
+    public Long postSch(HttpServletRequest request, @RequestBody final ScheduleDTO scheduleDTO) throws ParseException {
         return scheduleService.save(request, scheduleDTO);
     }
 

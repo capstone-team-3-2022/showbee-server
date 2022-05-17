@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.List;
 
 //@RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class ScheduleService {
     private final UserJpaRepository userJpaRepository;
 
     @Transactional
-    public Long save(HttpServletRequest request, final ScheduleDTO scheduleDTO){
+    public Long save(HttpServletRequest request, final ScheduleDTO scheduleDTO) throws ParseException {
         User loginUser = userService.getUser(request);
         Schedule sch = scheduleRepository.save(scheduleDTO.toEntity(loginUser));
         if(scheduleDTO.toEntity(loginUser).getShared()){
@@ -45,7 +46,6 @@ public class ScheduleService {
         User loginUser = userService.getUser(request);
         return scheduleRepository.findAllByUser(loginUser);
     }
-
 
 
 }
