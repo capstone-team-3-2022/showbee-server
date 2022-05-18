@@ -22,7 +22,7 @@ public class FinancialDTO {
 
     public Financial toEntity(User user){
         return Financial.builder()
-                .category(category).user(user).price(price).date(date).content(content)
+                .category(category).user(user).price(price).date(date).content(content).fid(fid)
                 .build();
     }
 

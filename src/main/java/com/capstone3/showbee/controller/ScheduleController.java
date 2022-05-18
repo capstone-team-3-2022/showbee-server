@@ -35,7 +35,6 @@ public class ScheduleController {
 
     @GetMapping(value="/get") //user의 일정 가져오기
     public List<Schedule> getlist(HttpServletRequest request){
-        List<Schedule> result =  scheduleService.findAllByUser(request);
         return scheduleService.findAll(request);
     }
 

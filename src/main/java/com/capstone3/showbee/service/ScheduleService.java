@@ -49,13 +49,11 @@ public class ScheduleService {
     public List<Schedule> findAll(HttpServletRequest request){
         List<Schedule> result =  findAllByUser(request);
         User loginUser = userService.getUser(request);
-//        System.out.println("result: "+ sharedRepository.findAllByUser(loginUser));
         List<Shared> sresult =  sharedRepository.findAllByUser(loginUser);
         for(Shared sh: sresult){
             Schedule schedule = sh.getSchedule();
             result.add(schedule);
         }
-//        result.addAll(sresult);
         return result;
     }
 }

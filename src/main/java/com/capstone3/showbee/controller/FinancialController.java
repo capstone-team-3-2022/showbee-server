@@ -31,7 +31,7 @@ public class FinancialController {
 
     @PostMapping(value = "/post")
     public Long postFin(HttpServletRequest request, @RequestBody final FinancialDTO financialDTO) {
-        return financialService.save(request, financialDTO);
+        return financialService.save(request, financialDTO).getFid();
     }
 
     @DeleteMapping(value = "/delete/{fid}")
@@ -40,9 +40,10 @@ public class FinancialController {
         return responseService.getSuccessResult();
     }
 
-//    @PutMapping(value="/modify")
-//    public SingleResult<Financial> modifyFinancial(HttpServletRequest request, @RequestBody final FinancialDTO financialDTO, long fid){
-//        financialService.update(financialDTO, fid);
-//    }
+    @PutMapping(value="/modify")
+    public SingleResult<Financial> modifyFinancial(HttpServletRequest request, @RequestBody final FinancialDTO financialDTO){
+
+        return responseService.getSingleResult(financialService.update(financialDTO, request));
+    }
 
 }
