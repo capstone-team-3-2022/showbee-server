@@ -99,7 +99,9 @@ port: 8081
     
     
 ## Schedule
-    Date 형식: MM-dd
+    Date 형식: yyyy-MM-dd
+    Body로 넘겨주세요
+    
 ### post
 - 형식: POST
 - Parameter: stitle(String), content(String), price(int), date(Date), cycle(int), shared(boolean), participant(List)
@@ -141,6 +143,8 @@ port: 8081
 ## Financial
     : 가계부
     date 형식: yyyy-MM-dd
+    Body로 넘겨주세요
+
 
 ### post
 - 형식: POST
