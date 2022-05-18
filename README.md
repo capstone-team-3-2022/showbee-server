@@ -2,19 +2,18 @@
 ## Capstone3 Project
 
 ## DB table
-
 | User | 타입 | 설명 |
 | --- | --- | --- |
 | id(key) | long | id |
 | email | String | 이메일 |
-| password | String | 비밀번호 |
+| pw | String | 비밀번호 |
 | name | String | 닉네임 |
 
 | Shared | 타입 | 설명 |
 | --- | --- | --- |
 | uId | long | 참가자 |
 | id(key) | long |  |
-| id(Schedule) | long | 일정 id 값 |
+| sId | long | 일정 id 값 |
 
 | Schedule | 타입 | 설명 |
 | --- | --- | --- |
@@ -22,18 +21,22 @@
 | price | Integer | 금액 |
 | content | String | 내용(사용자 작성) |
 | date | Date | 날짜 |
-| cycle | Integer | 반복 주기 |
+| cycle | Integer? | 반복 주기 |
+| participant | List<User> | 참가자(공유) |
 | category | String |  |
 | shared | boolean | 공유여부 |
 | uId | long | 유저 |
 
 | Financial | 타입 | 설명 |
 | --- | --- | --- |
-| id(key) | long | 가계부 내역 id값 |
+| fid(key) | long | 가계부 내역 id값 |
 | date | Date | 날짜 |
 | price | Integer | 가격 |
 | content | String | 내용 |
 | category | String |  |
+| bank | String | 은행 |
+| memo | String | 메모 (사용자추가) |
+| inoutcome | boolean | 수입/지출 여부 |
 
 
 ----
@@ -148,7 +151,7 @@ port: 8081
 
 ### post
 - 형식: POST
-- Parameter: date, content, price, category
+- Body: date, content, price, category, bank, memo, inoutcome
 - 주소: v1/financial/post
 - Header에 유저 로그인 토큰 필요
 - 가계부 등록
@@ -160,10 +163,15 @@ port: 8081
 - 로그인한 유저의 가계부 조회
 - 반환: list
 
+### get
+- 형식: GET
+- Parameter: fid
+- 반환: Optional\<Financial\>
+- 주소: v1/financial/get
 
 ### modify
 - 형식: PUT
-- Parameter: date, content, price, category, fid
+- Body: date, content, price, category, **fid**, bank, memo, inoutcome
 - Header에 로그인 토큰 필요
 - 주소: v1/financial/modify
 - 기존 내용은 유지한 채로 등록과 같은 파라미터 넘겨주기
