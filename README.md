@@ -163,10 +163,11 @@ port: 8081
 
 ### modify
 - 형식: PUT
-- Parameter: date, content, price, category
+- Parameter: date, content, price, category, fid
 - Header에 로그인 토큰 필요
-- 주소: v1/financial/lists
+- 주소: v1/financial/modify
 - 기존 내용은 유지한 채로 등록과 같은 파라미터 넘겨주기
+- fid는 해당 가계부의 id 값
 
 ### delete
 - 형식: DELETE
