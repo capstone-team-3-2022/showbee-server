@@ -1,5 +1,6 @@
 package com.capstone3.showbee.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,14 +23,16 @@ public class Financial {
     private String category;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private User user;
 
     @Builder
-    public Financial(Date date, int price, String content, String category, User user){
+    public Financial(Date date, int price, String content, String category, User user, Long fid){
         this.category = category;
         this.date = date;
         this.content = content;
         this.user = user;
         this.price = price;
+        this.fid = fid;
     }
 }

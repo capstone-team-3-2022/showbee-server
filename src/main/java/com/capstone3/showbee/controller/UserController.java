@@ -49,22 +49,29 @@ public class UserController {
     }
 
     @PutMapping(value = "/modify/name")
-    public SingleResult<User> modifyName(HttpServletRequest request, @RequestParam String name){
+    public boolean modifyName(HttpServletRequest request, @RequestParam String name){
         User loginUser = userService.getUser(request);
-        System.out.println("password: "+loginUser.getPassword());
-        User user = User.builder()
-                        .id(loginUser.getId()).name(name).email(loginUser.getEmail()).password(loginUser.getPassword())
-                        .roles(Collections.singletonList("ROLE_USER")).build();
-        return responseService.getSingleResult(userJpaRepository.save(user));
+        if(name==null||name.equals("")) return false;
+        else{
+            User user = User.builder()
+                    .id(loginUser.getId()).name(name).email(loginUser.getEmail()).password(loginUser.getPassword())
+                    .roles(Collections.singletonList("ROLE_USER")).build();
+            userJpaRepository.save(user);
+            return true;
+        }
     }
 
     @PutMapping(value = "/modify/pwd")
-    public SingleResult<User> modifyPwd(HttpServletRequest request, @RequestParam String password){
+    public boolean modifyPwd(HttpServletRequest request, @RequestParam String password){
         User loginUser = userService.getUser(request);
-        User user = User.builder()
-                        .id(loginUser.getId()).name(loginUser.getName()).email(loginUser.getEmail()).password(passwordEncoder.encode(password))
-                        .roles(Collections.singletonList("ROLE_USER")).build();
-        return responseService.getSingleResult(userJpaRepository.save(user));
+        if(password==null||password.equals("")) return false;
+        else{
+            User user = User.builder()
+                    .id(loginUser.getId()).name(loginUser.getName()).email(loginUser.getEmail()).password(passwordEncoder.encode(password))
+                    .roles(Collections.singletonList("ROLE_USER")).build();
+            userJpaRepository.save(user);
+            return true;
+        }
     }
 
 

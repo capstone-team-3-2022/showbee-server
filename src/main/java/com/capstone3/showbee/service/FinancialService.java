@@ -27,17 +27,18 @@ public class FinancialService {
 
     }
     @Transactional
-    public Long save(HttpServletRequest request, final FinancialDTO financialDTO){
+    public Financial save(HttpServletRequest request, final FinancialDTO financialDTO){
         User loginUser = userService.getUser(request);
-        return financialRepository.save(financialDTO.toEntity(loginUser)).getFid();
+        return financialRepository.save(financialDTO.toEntity(loginUser));
     }
 
-    public void modify(FinancialDTO financialDTO, HttpServletRequest request){
+    public Financial update(FinancialDTO financialDTO, HttpServletRequest request){
         Long fid = financialDTO.getFid();
+        System.out.println("FID: " + fid);
         Optional<Financial> result = financialRepository.findById(fid);
         if(result.isPresent()){
             User loginUser = userService.getUser(request);
-            financialRepository.save(financialDTO.toEntity(loginUser));
-        }
+            return financialRepository.save(financialDTO.toEntity(loginUser));
+        }else return null;
     }
 }

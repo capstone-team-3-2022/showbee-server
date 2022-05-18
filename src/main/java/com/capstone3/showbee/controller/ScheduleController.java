@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
+import java.util.List;
 
 @RestController
 @RequestMapping(value="v1/schedule")
@@ -25,21 +26,18 @@ public class ScheduleController {
     private final ResponseService responseService;
     private final ScheduleService scheduleService;
 
-    @GetMapping(value="/lists")
-    public ListResult<Schedule> list(){
-        return responseService.getListResult(scheduleRepository.findAll());
-    }
 
     @PostMapping(value="/post")
-    public SingleResult<Schedule> postSch(HttpServletRequest request, @RequestBody final ScheduleDTO scheduleDTO) throws ParseException {
-        return responseService.getSingleResult(scheduleService.save(request, scheduleDTO)) ;
+    public Long postSch(HttpServletRequest request, @RequestBody final ScheduleDTO scheduleDTO) throws ParseException {
+        return scheduleService.save(request, scheduleDTO).getSId();
     }
 
 
-    @GetMapping(value="/get")
-    public ListResult<Schedule> getlist(HttpServletRequest request){
-        return responseService.getListResult(scheduleService.findAllByUser(request));
+    @GetMapping(value="/get") //user의 일정 가져오기
+    public List<Schedule> getlist(HttpServletRequest request){
+        return scheduleService.findAll(request);
     }
+
 
     @DeleteMapping(value = "/delete/{sid}")
     public CommonResult delete(@PathVariable Long sid){
