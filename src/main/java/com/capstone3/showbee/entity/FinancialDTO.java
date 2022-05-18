@@ -19,10 +19,14 @@ public class FinancialDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
     private int price;
+    private String bank;
+    private String memo;
+    private boolean inoutcome;
 
     public Financial toEntity(User user){
         return Financial.builder()
                 .category(category).user(user).price(price).date(date).content(content).fid(fid)
+                .bank(bank).memo(memo).inoutcome(inoutcome)
                 .build();
     }
 

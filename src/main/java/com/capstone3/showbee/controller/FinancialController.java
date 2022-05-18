@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,8 +43,12 @@ public class FinancialController {
 
     @PutMapping(value="/modify")
     public SingleResult<Financial> modifyFinancial(HttpServletRequest request, @RequestBody final FinancialDTO financialDTO){
-
         return responseService.getSingleResult(financialService.update(financialDTO, request));
+    }
+
+    @GetMapping("/get")
+    public Optional<Financial> getFinancialByFid(Long fid){
+        return financialRepository.findById(fid);
     }
 
 }

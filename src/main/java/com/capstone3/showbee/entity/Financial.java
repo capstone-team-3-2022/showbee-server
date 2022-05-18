@@ -21,18 +21,24 @@ public class Financial {
     private int price;
     private String content;
     private String category;
+    private String bank;
+    private String memo;
+    private boolean inoutcome;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private User user;
 
     @Builder
-    public Financial(Date date, int price, String content, String category, User user, Long fid){
+    public Financial(Date date, int price, String content, String category, User user, Long fid, String bank, String memo, boolean inoutcome){
         this.category = category;
         this.date = date;
         this.content = content;
         this.user = user;
         this.price = price;
         this.fid = fid;
+        this.memo = memo;
+        this.bank = bank;
+        this.inoutcome = inoutcome;
     }
 }
