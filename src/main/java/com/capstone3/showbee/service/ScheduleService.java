@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Optional;
 
 //@RequiredArgsConstructor
 @Service
@@ -66,4 +67,13 @@ public class ScheduleService {
         }
         scheduleRepository.deleteById(sId);
     }
+
+//    public void update(HttpServletRequest request, final ScheduleDTO scheduleDTO){
+//        User loginUser = userService.getUser(request);
+//        Long sid = scheduleDTO.getSId();
+//        Optional<Schedule> result = scheduleRepository.findById(sid);
+//        if(result.isPresent()){
+//
+//        }
+//    }
 }
