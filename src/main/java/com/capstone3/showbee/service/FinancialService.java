@@ -11,8 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -41,4 +40,18 @@ public class FinancialService {
             return financialRepository.save(financialDTO.toEntity(loginUser));
         }else return null;
     }
+
+    public Financial getInOutCome(HttpServletRequest request, String nowDate){
+        User loginUser = userService.getUser(request);
+        List<Financial> result = financialRepository.findFAllByUser(loginUser);
+        int[] money = {0, 0}; //[0] = 수입, [1] = 지출
+        Map<String, int[]> dateMap = new HashMap<>();
+        for(Financial f: result){
+            String stringDate = f.getDate().toString();
+            if(stringDate.compareTo(nowDate)>=0){
+
+            }
+        }
+    }
+
 }
