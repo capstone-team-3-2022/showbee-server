@@ -56,4 +56,14 @@ public class ScheduleService {
         }
         return result;
     }
+
+    public void deleteSch(Long sId){
+        List<Shared> sharedSch = sharedRepository.findAllBySchedule(scheduleRepository.getById(sId));
+        for(Shared sh: sharedSch){
+            Shared.builder().schedule(null).user(null).id(sh.getId()).build();
+            //update
+            sharedRepository.deleteById(sh.getId());
+        }
+        scheduleRepository.deleteById(sId);
+    }
 }

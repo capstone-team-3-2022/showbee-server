@@ -41,8 +41,10 @@ public class ScheduleController {
 
     @DeleteMapping(value = "/delete/{sid}")
     public CommonResult delete(@PathVariable Long sid){
-        scheduleRepository.deleteById(sid);
+        scheduleService.deleteSch(sid);
         return responseService.getSuccessResult();
     }
+
+
 
 }

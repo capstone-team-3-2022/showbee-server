@@ -31,7 +31,7 @@ public class Schedule {
 //    private List<Shared> participant;
 
     @Builder
-    public Schedule(User user, String category, String stitle, String content, Integer price, Date date, Integer cycle, Boolean shared) {
+    public Schedule(Long sId, User user, String category, String stitle, String content, Integer price, Date date, Integer cycle, Boolean shared) {
         this.content = content;
         this.price = price;
         this.date = date;
@@ -40,6 +40,7 @@ public class Schedule {
         this.stitle = stitle;
         this.user = user;
         this.category = category;
+        this.sId = sId;
     }
 
 

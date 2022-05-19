@@ -34,7 +34,6 @@ public class FinancialService {
 
     public Financial update(FinancialDTO financialDTO, HttpServletRequest request){
         Long fid = financialDTO.getFid();
-        System.out.println("FID: " + fid);
         Optional<Financial> result = financialRepository.findById(fid);
         if(result.isPresent()){
             User loginUser = userService.getUser(request);
