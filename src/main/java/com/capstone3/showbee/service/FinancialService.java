@@ -42,10 +42,49 @@ public class FinancialService {
         } else return null;
     }
 
+
     public Map<Date, int[]> getInOutCome(HttpServletRequest request, String nowDate) {
+        Map<Date, int[]> dateMap = new HashMap<>();
         User loginUser = userService.getUser(request);
         List<Financial> result = financialRepository.findFAllByUser(loginUser);
-        Map<Date, int[]> dateMap = new HashMap<>();
+        String nextDate = getNextDate(nowDate);
+
+        for (Financial f : result) {
+            Date date = f.getDate();
+            String stringDate = date.toString();
+            if (stringDate.compareTo(nowDate) >= 0 && stringDate.compareTo(nextDate) < 0) {
+                int[] money;
+                if (dateMap.containsKey(date)) money = new int[]{dateMap.get(date)[0], dateMap.get(date)[1]};
+                else money = new int[]{0, 0};
+
+                if (f.getInoutcome()) money[0] += f.getPrice();
+                else money[1] += f.getPrice();
+
+                dateMap.put(date, money);
+            }
+        }
+        return dateMap;
+    }
+
+    public int[] monthlyTotal(HttpServletRequest request, String nowDate) {
+        String nextDate = getNextDate(nowDate);
+        User loginUser = userService.getUser(request);
+        List<Financial> result = financialRepository.findFAllByUser(loginUser);
+        int income = 0;
+        int outcome = 0;
+        for(Financial f: result){
+            Date date = f.getDate();
+            String stringDate = date.toString();
+            if(stringDate.compareTo(nowDate) >= 0 && stringDate.compareTo(nextDate) < 0){
+                if (f.getInoutcome()) income += f.getPrice();
+                else outcome += f.getPrice();
+            }
+        }
+        int[] totalPrice = {income, outcome};
+        return totalPrice;
+    }
+
+    public String getNextDate(String nowDate) {
         String year = nowDate.substring(0, 5);
         int month = Integer.parseInt(nowDate.substring(5));
         month++;
@@ -63,24 +102,7 @@ public class FinancialService {
                 nextDate = year + Integer.toString(month);
                 break;
         }
-        for (Financial f : result) {
-            Date date = f.getDate();
-            String stringDate = date.toString();
-            if (stringDate.compareTo(nowDate) >= 0 && stringDate.compareTo(nextDate) < 0) {
-                int[] money;
-                if (dateMap.containsKey(date)) money = new int[]{dateMap.get(date)[0], dateMap.get(date)[1]};
-                else money = new int[]{0, 0};
-
-                if (f.getInoutcome()) money[0] += f.getPrice();
-                else money[1] += f.getPrice();
-
-                dateMap.put(date, money);
-            }
-        }
-        dateMap.forEach((k, v) -> {
-            System.out.println(k + ":" + v[0] + "," + v[1]);
-        });
-        return dateMap;
+        return nextDate;
     }
 
 }

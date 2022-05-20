@@ -59,4 +59,9 @@ public class FinancialController {
         return financialService.getInOutCome(request, nowDate);
     }
 
+    @GetMapping("/getMonthlyTotal")
+    public int[] getMonthlyTotal(HttpServletRequest request, String nowDate){
+        return financialService.monthlyTotal(request, nowDate);
+    }
+
 }
