@@ -163,6 +163,26 @@ port: 8081
 - Parameter: fid
 - 주소: v1/financial/get
 - 반환: Optional\<Financial\>
+- 해당 가계부 내용 반환
+    
+### getMonthly
+- 형식: GET
+- 주소: v1/financial/getMonthly
+- Parameter: String nowDate("yyyy-MM")
+- nowDate에 해당하는 달의 가계부 내역(날짜, 수입, 지출)
+- 반환: Map<Date, int[]>
+- int[][0]: 수입 \/ int[][1]: 지출
+- Header에 유저 로그인 토큰 필요
+    
+### getMonthlyTotal
+- 형식: GET
+- 주소: v1/financial/getMonthlyTotal
+- Parameter: String nowDate("yyyy-MM")
+- nowDate에 해당하는 달의 총 수입, 지출
+- 반환: int[]
+    - int[][0]: 총수입
+    - int[][1]: 총지출
+- Header에 유저 로그인 토큰 필요
 
 ### modify
 - 형식: PUT
