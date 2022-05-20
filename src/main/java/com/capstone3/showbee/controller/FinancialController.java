@@ -10,9 +10,12 @@ import com.capstone3.showbee.service.FinancialService;
 import com.capstone3.showbee.service.ResponseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.spring.web.json.Json;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -41,14 +44,24 @@ public class FinancialController {
         return responseService.getSuccessResult();
     }
 
-    @PutMapping(value="/modify")
-    public SingleResult<Financial> modifyFinancial(HttpServletRequest request, @RequestBody final FinancialDTO financialDTO){
+    @PutMapping(value = "/modify")
+    public SingleResult<Financial> modifyFinancial(HttpServletRequest request, @RequestBody final FinancialDTO financialDTO) {
         return responseService.getSingleResult(financialService.update(financialDTO, request));
     }
 
     @GetMapping("/get")
-    public Optional<Financial> getFinancialByFid(Long fid){
+    public Optional<Financial> getFinancialByFid(Long fid) {
         return financialRepository.findById(fid);
+    }
+
+    @GetMapping("/getMonthly")
+    public Map<Date, int[]> getMonthly(HttpServletRequest request, String nowDate) {
+        return financialService.getInOutCome(request, nowDate);
+    }
+
+    @GetMapping("/getMonthlyTotal")
+    public int[] getMonthlyTotal(HttpServletRequest request, String nowDate){
+        return financialService.monthlyTotal(request, nowDate);
     }
 
 }
