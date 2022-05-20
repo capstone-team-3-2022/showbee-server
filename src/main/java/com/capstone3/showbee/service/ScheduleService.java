@@ -32,8 +32,8 @@ public class ScheduleService {
     public Schedule save(HttpServletRequest request, final ScheduleDTO scheduleDTO) throws ParseException {
         User loginUser = userService.getUser(request);
         Schedule sch = scheduleRepository.save(scheduleDTO.toEntity(loginUser));
-        if(scheduleDTO.toEntity(loginUser).getShared()){
-            for (String email: scheduleDTO.getParticipant()){
+        if (scheduleDTO.toEntity(loginUser).getShared()) {
+            for (String email : scheduleDTO.getParticipant()) {
                 Shared sh = Shared.builder().user(userJpaRepository.findByEmail(email).get()).schedule(sch).build();
                 sharedRepository.save(sh);
             }
@@ -42,25 +42,25 @@ public class ScheduleService {
     }
 
 
-    public List<Schedule> findAllByUser(HttpServletRequest request){
+    public List<Schedule> findAllByUser(HttpServletRequest request) {
         User loginUser = userService.getUser(request);
         return scheduleRepository.findAllByUser(loginUser);
     }
 
-    public List<Schedule> findAll(HttpServletRequest request){
-        List<Schedule> result =  findAllByUser(request);
+    public List<Schedule> findAll(HttpServletRequest request) {
+        List<Schedule> result = findAllByUser(request);
         User loginUser = userService.getUser(request);
-        List<Shared> sresult =  sharedRepository.findAllByUser(loginUser);
-        for(Shared sh: sresult){
+        List<Shared> sresult = sharedRepository.findAllByUser(loginUser);
+        for (Shared sh : sresult) {
             Schedule schedule = sh.getSchedule();
             result.add(schedule);
         }
         return result;
     }
 
-    public void deleteSch(Long sId){
+    public void deleteSch(Long sId) {
         List<Shared> sharedSch = sharedRepository.findAllBySchedule(scheduleRepository.getById(sId));
-        for(Shared sh: sharedSch){
+        for (Shared sh : sharedSch) {
             Shared.builder().schedule(null).user(null).id(sh.getId()).build();
             //update
             sharedRepository.deleteById(sh.getId());
@@ -68,12 +68,20 @@ public class ScheduleService {
         scheduleRepository.deleteById(sId);
     }
 
-//    public void update(HttpServletRequest request, final ScheduleDTO scheduleDTO){
-//        User loginUser = userService.getUser(request);
-//        Long sid = scheduleDTO.getSId();
-//        Optional<Schedule> result = scheduleRepository.findById(sid);
-//        if(result.isPresent()){
-//
-//        }
-//    }
+    public Schedule update(HttpServletRequest request, ScheduleDTO scheduleDTO) throws ParseException {
+        User loginUser = userService.getUser(request);
+        Long sid = scheduleDTO.getSId();
+        Optional<Schedule> result = scheduleRepository.findById(sid);
+        if(result.isPresent()){
+            List<Shared> sharedSch = sharedRepository.findAllBySchedule(scheduleRepository.getById(sid));
+            if (!sharedSch.isEmpty()) {
+                for (Shared s : sharedSch) {
+                    Shared.builder().schedule(null).user(null).id(s.getId()).build();
+                    //update
+                    sharedRepository.deleteById(s.getId());
+                }
+            }
+        }
+        return scheduleRepository.save(scheduleDTO.toEntity(loginUser));
+    }
 }

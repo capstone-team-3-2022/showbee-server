@@ -33,7 +33,7 @@ public class ScheduleController {
     }
 
 
-    @GetMapping(value="/get") //user의 일정 가져오기
+    @GetMapping(value="/lists") //user의 일정 가져오기(모두)
     public List<Schedule> getlist(HttpServletRequest request){
         return scheduleService.findAll(request);
     }
@@ -46,5 +46,9 @@ public class ScheduleController {
     }
 
 
+    @PutMapping("/modify")
+    public Schedule update(@RequestBody final ScheduleDTO scheduleDTO, HttpServletRequest request) throws ParseException {
+        return scheduleService.update(request, scheduleDTO);
+    }
 
 }
