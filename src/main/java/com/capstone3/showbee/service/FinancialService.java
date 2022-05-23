@@ -4,6 +4,7 @@ import com.capstone3.showbee.entity.Financial;
 import com.capstone3.showbee.entity.FinancialDTO;
 import com.capstone3.showbee.entity.Shared;
 import com.capstone3.showbee.entity.User;
+import com.capstone3.showbee.model.MonthlyFinancial;
 import com.capstone3.showbee.repository.FinancialRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -42,24 +43,25 @@ public class FinancialService {
     }
 
 
-    public Map<Date, int[]> getInOutCome(HttpServletRequest request, String nowDate) {
-        Map<Date, int[]> dateMap = new HashMap<>();
+    public Map<String, int[]> getInOutCome(HttpServletRequest request, String nowDate) {
+        Map<String, int[]> dateMap = new HashMap<>();
         User loginUser = userService.getUser(request);
         List<Financial> result = financialRepository.findFAllByUser(loginUser);
         String nextDate = getNextDate(nowDate);
 
         for (Financial f : result) {
             Date date = f.getDate();
-            String stringDate = date.toString();
+            String stringDate = date.toString(); //가계부에 있는 데이터들의 날짜
             if (stringDate.compareTo(nowDate) >= 0 && stringDate.compareTo(nextDate) < 0) {
                 int[] money;
-                if (dateMap.containsKey(date)) money = new int[]{dateMap.get(date)[0], dateMap.get(date)[1]};
+                String day = stringDate.substring(8,10);
+                System.out.println(day);
+                if (dateMap.containsKey(day)) money = new int[]{dateMap.get(day)[0], dateMap.get(day)[1]};
                 else money = new int[]{0, 0};
 
                 if (f.getInoutcome()) money[0] += f.getPrice();
                 else money[1] += f.getPrice();
-
-                dateMap.put(date, money);
+                dateMap.put(day, money);
             }
         }
         return dateMap;
@@ -103,5 +105,13 @@ public class FinancialService {
         }
         return nextDate;
     }
+
+//    public List<MonthlyFinancial> getMonthly(String nowDate, HttpServletRequest request){
+//
+//        Map<Date, int[]> dateMap =  getInOutCome(request, nowDate);
+//        for( data: dateMap){
+//            System.out.println(data);
+//        }
+//    }
 
 }
