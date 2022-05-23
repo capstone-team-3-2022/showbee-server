@@ -55,7 +55,7 @@ public class FinancialController {
     }
 
     @GetMapping("/getMonthly")
-    public Map<Date, int[]> getMonthly(HttpServletRequest request, String nowDate) {
+    public Map<String, int[]> getMonthly(HttpServletRequest request, String nowDate) {
         return financialService.getInOutCome(request, nowDate);
     }
 
