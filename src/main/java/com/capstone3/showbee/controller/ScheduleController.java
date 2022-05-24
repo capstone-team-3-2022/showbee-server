@@ -51,4 +51,14 @@ public class ScheduleController {
         return scheduleService.update(request, scheduleDTO);
     }
 
+    @GetMapping("/getMonthlyTotal")
+    public int[] getMonthlyTotal(HttpServletRequest request, String nowDate){
+        return scheduleService.monthlyTotal(request, nowDate);
+    }
+
+//    @GetMapping("/getMonthlyCategory")
+//    public Map<String, List<String>> getMonthlyCategory(HttpServletRequest request, String nowDate){
+//
+//    }
+
 }
