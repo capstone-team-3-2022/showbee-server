@@ -83,7 +83,7 @@ public class ScheduleService {
 
     //inoutcome아니고 category
     public Map<String, List<String>> getCategoryMonthly(HttpServletRequest request, String nowDate) {
-        Map<String, List<String>> monthlyMap = new HashMap<>();
+        Map<String, List<String>> monthlyMap = new TreeMap<>();
         User loginUser = userService.getUser(request);
         List<Schedule> result = scheduleRepository.findAllByUser(loginUser);
         String nextDate = getNextDate(nowDate);
