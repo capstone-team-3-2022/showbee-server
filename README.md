@@ -56,17 +56,18 @@ port: 8081
 
 ### Sign up(회원가입)
 - 형식: POST
-- Parameter: email, name, password
+- Query: email, name, password
 - 주소: v1/signup
     
     #### 이메일 중복체크
     - 형식: GET
+    - PathVar: email
     - v1/check/{email}
     - 중복이면 true 반환
 
 ### Sign in(로그인)
 - 형식: POST
-- Parameter: email, password
+- Query: email, password
 - 주소: v1/signin
 - Token 값 반환
 
@@ -78,7 +79,7 @@ port: 8081
     #### email로 찾기
     - 형식: GET
     - 주소: v1/user/get/{email}
-    - Parameter: email
+    - PathVar: email
     - email로 사용자 검색 후 반환
 
 ### 삭제
@@ -94,10 +95,10 @@ port: 8081
 - 회원 정보 수정
 - 반환: boolean(성공 시 true)
     #### 닉네임(name) 수정
-    - Parameter: name
+    - Query: name
     - 주소: v1/user/modify/name
     #### 비밀번호(pwd) 수정
-    - Parameter: password
+    - Query: password
     - 주소: v1/user/modify/pwd
     
     
@@ -124,7 +125,7 @@ port: 8081
     
     ### getMonthly
     - 형식: GET
-    - Parameter: nowDate(String) - 형식 ("yyyy-MM")
+    - Query: nowDate(String) - 형식 ("yyyy-MM")
     - 주소: v1/schedule/getMonthlyTotal
     - 반환: int[] 
         - int[0]: 수입
@@ -133,7 +134,7 @@ port: 8081
     
     ### getMonthly
     - 형식: GET
-    - Parameter: nowDate(String) - 형식 ("yyyy-MM")
+    - Query: nowDate(String) - 형식 ("yyyy-MM")
     - 주소: v1/schedule/getMonthlyCategory
     - 반환: Map\<String, List\<String\>\>
     - 해당 달의 날짜별 카테고리(아이콘 표시용)
@@ -149,7 +150,7 @@ port: 8081
 
 ### delete
 - 형식: DELETE
-- Parameter: fid    
+- PathVar: fid    
 - 주소: v1/schedule/delete/{sid}
 - 가계부 고유 키(sid)로 삭제
 - 현재 공유된 일정은 삭제 안 됨 
@@ -177,7 +178,7 @@ port: 8081
 
 ### get
 - 형식: GET
-- Parameter: fid
+- Query: fid
 - 주소: v1/financial/get
 - 반환: Optional\<Financial\>
 - 해당 가계부 내용 반환
@@ -185,7 +186,7 @@ port: 8081
 ### getMonthly
 - 형식: GET
 - 주소: v1/financial/getMonthly
-- Parameter: String nowDate("yyyy-MM")
+- Query: String nowDate("yyyy-MM")
 - nowDate에 해당하는 달의 가계부 내역(날짜, 수입, 지출)
 - 반환: Map<Date, int[]>
 - int[][0]: 수입 \/ int[][1]: 지출
@@ -194,13 +195,22 @@ port: 8081
 ### getMonthlyTotal
 - 형식: GET
 - 주소: v1/financial/getMonthlyTotal
-- Parameter: String nowDate("yyyy-MM")
+- Query: String nowDate("yyyy-MM")
 - nowDate에 해당하는 달의 총 수입, 지출
 - 반환: int[]
     - int[][0]: 총수입
     - int[][1]: 총지출
 - Header에 유저 로그인 토큰 필요
 
+### getlist
+- 형식: GET
+- 주소: v1/financial/getlist
+- Query: String nowDate("yyyy-MM")
+- nowDate에 해당하는 달의 가계부
+- 반환: Map<String, List<>>
+- 로그인 토큰 필요
+
+    
 ### modify
 - 형식: PUT
 - Body: date, content, price, category, **fid**, bank, memo, inoutcome
@@ -211,6 +221,6 @@ port: 8081
 
 ### delete
 - 형식: DELETE
-- Parameter: fid    
+- PathVar: fid    
 - 주소: v1/financial/delete/{fid}
 - 가계부 고유 키(fid)로 삭제
