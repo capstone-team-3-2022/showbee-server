@@ -25,11 +25,11 @@ public class ScheduleDTO {
     private String category;
     @Getter
     private List<String> participant;
-
+    private boolean inoutcome;
     public Schedule toEntity(User user) throws ParseException {
         return Schedule.builder()
                 .content(content).user(user).price(price).date(date).cycle(cycle).shared(shared).stitle(stitle).category(category)
-                .sId(sId)
+                .sId(sId).inoutcome(inoutcome)
                 .build();
     }
 

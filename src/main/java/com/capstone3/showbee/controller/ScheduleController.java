@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value="v1/schedule")
@@ -49,6 +50,16 @@ public class ScheduleController {
     @PutMapping("/modify")
     public Schedule update(@RequestBody final ScheduleDTO scheduleDTO, HttpServletRequest request) throws ParseException {
         return scheduleService.update(request, scheduleDTO);
+    }
+
+    @GetMapping("/getMonthlyTotal")
+    public int[] getMonthlyTotal(HttpServletRequest request, String nowDate){
+        return scheduleService.monthlyTotal(request, nowDate);
+    }
+
+    @GetMapping("/getMonthlyCategory")
+    public Map<String, List<String>> getMonthlyCategory(HttpServletRequest request, String nowDate){
+        return scheduleService.getCategoryMonthly(request, nowDate);
     }
 
 }

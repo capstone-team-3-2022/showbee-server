@@ -27,11 +27,12 @@ public class Schedule {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private User user; //일정 추가한 사람
+    private boolean inoutcome;
 //    @OneToMany(cascade = CascadeType.ALL)
 //    private List<Shared> participant;
 
     @Builder
-    public Schedule(Long sId, User user, String category, String stitle, String content, Integer price, Date date, Integer cycle, Boolean shared) {
+    public Schedule(boolean inoutcome, Long sId, User user, String category, String stitle, String content, Integer price, Date date, Integer cycle, Boolean shared) {
         this.content = content;
         this.price = price;
         this.date = date;
@@ -41,6 +42,11 @@ public class Schedule {
         this.user = user;
         this.category = category;
         this.sId = sId;
+        this.inoutcome = inoutcome;
+    }
+
+    public boolean getInoutcome(){
+        return this.inoutcome;
     }
 
 
