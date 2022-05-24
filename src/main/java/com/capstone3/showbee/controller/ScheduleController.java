@@ -57,7 +57,7 @@ public class ScheduleController {
         return scheduleService.monthlyTotal(request, nowDate);
     }
 
-    @GetMapping("/getMonthlyCategory")
+    @GetMapping("/getMonthly")
     public Map<String, List<String>> getMonthlyCategory(HttpServletRequest request, String nowDate){
         return scheduleService.getCategoryMonthly(request, nowDate);
     }
