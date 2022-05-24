@@ -106,12 +106,6 @@ public class FinancialService {
         return nextDate;
     }
 
-//    public List<MonthlyFinancial> getMonthly(String nowDate, HttpServletRequest request){
-//
-//        Map<Date, int[]> dateMap =  getInOutCome(request, nowDate);
-//        for( data: dateMap){
-//            System.out.println(data);
-//        }
-//    }
+
 
 }
