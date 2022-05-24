@@ -131,7 +131,7 @@ port: 8081
         - int[1]: 지출
     - 해당하는 달의 고정 수입, 지출 총 금액
     
-    ### getMonthlyCategory
+    ### getMonthly
     - 형식: GET
     - Parameter: nowDate(String) - 형식 ("yyyy-MM")
     - 주소: v1/schedule/getMonthlyCategory
