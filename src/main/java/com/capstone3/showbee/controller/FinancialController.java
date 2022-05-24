@@ -4,6 +4,7 @@ import com.capstone3.showbee.entity.Financial;
 import com.capstone3.showbee.entity.FinancialDTO;
 import com.capstone3.showbee.model.CommonResult;
 import com.capstone3.showbee.model.ListResult;
+import com.capstone3.showbee.model.MonthlyFinancial;
 import com.capstone3.showbee.model.SingleResult;
 import com.capstone3.showbee.repository.FinancialRepository;
 import com.capstone3.showbee.service.FinancialService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.spring.web.json.Json;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.Month;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -64,4 +66,8 @@ public class FinancialController {
         return financialService.monthlyTotal(request, nowDate);
     }
 
+    @GetMapping("/getlist")
+    public Map<String, List<MonthlyFinancial>> getAll(HttpServletRequest request, String nowDate){
+        return financialService.getmonth(request, nowDate);
+    }
 }

@@ -42,9 +42,35 @@ public class FinancialService {
         } else return null;
     }
 
+    public Map<String, List<MonthlyFinancial>> getmonth(HttpServletRequest request, String nowDate){
+        Map<String, List<MonthlyFinancial>> getf = new TreeMap<>();
+        User loginUser = userService.getUser(request);
+        List<Financial> allf = financialRepository.findFAllByUser(loginUser);
+        List<MonthlyFinancial> mfl;
+        String nextDate = getNextDate(nowDate);
+        for(Financial f: allf){
+            Date date = f.getDate();
+            String stringDate = date.toString();
+            if (stringDate.compareTo(nowDate) >= 0 && stringDate.compareTo(nextDate) < 0) {
+                String day = stringDate.substring(8,10);
+                MonthlyFinancial mf =  MonthlyFinancial.builder()
+                        .price(f.getPrice()).inoutcome(f.getInoutcome()).content(f.getContent()).category(f.getCategory()).fid(f.getFid()).build();
+                if (getf.containsKey(day)){
+                    mfl= getf.get(day);
+                    mfl.add(mf);
 
+                } else {
+                    mfl = new ArrayList<>();
+                    mfl.add(mf);
+                }
+                getf.put(day, mfl);
+            }
+        }
+
+        return getf;
+    }
     public Map<String, int[]> getInOutCome(HttpServletRequest request, String nowDate) {
-        Map<String, int[]> dateMap = new HashMap<>();
+        Map<String, int[]> dateMap = new TreeMap<>();
         User loginUser = userService.getUser(request);
         List<Financial> result = financialRepository.findFAllByUser(loginUser);
         String nextDate = getNextDate(nowDate);
@@ -81,8 +107,7 @@ public class FinancialService {
                 else outcome += f.getPrice();
             }
         }
-        int[] totalPrice = {income, outcome};
-        return totalPrice;
+        return new int[]{income, outcome};
     }
 
     public String getNextDate(String nowDate) {
@@ -106,12 +131,6 @@ public class FinancialService {
         return nextDate;
     }
 
-//    public List<MonthlyFinancial> getMonthly(String nowDate, HttpServletRequest request){
-//
-//        Map<Date, int[]> dateMap =  getInOutCome(request, nowDate);
-//        for( data: dateMap){
-//            System.out.println(data);
-//        }
-//    }
+
 
 }
