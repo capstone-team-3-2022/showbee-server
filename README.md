@@ -26,6 +26,7 @@
 | category | String |  |
 | shared | boolean | 공유여부 |
 | uId | long | 유저 |
+| inoutcome | boolean | 수입/지출 여부 |
 
 | Financial | 타입 | 설명 |
 | --- | --- | --- |
@@ -106,7 +107,7 @@ port: 8081
     
 ### post
 - 형식: POST
-- Body: stitle(String), content(String), price(int), date(Date), cycle(int), shared(boolean), participant(List)
+- Body: stitle(String), content(String), price(int), date(Date), cycle(int), shared(boolean), participant(List), inoutcome(boolean)
 - 주소: v1/schedule/post
 - Header에 유저 로그인 토큰 필요
 - 파라미터 설명 db 테이블 참고
@@ -120,7 +121,23 @@ port: 8081
 - 주소: v1/schedule/get
 - 로그인한 유저의 일정 조회
 - 반환: List\<Schedule\>
-
+    
+    ### getMonthly
+    - 형식: GET
+    - Parameter: nowDate(String) - 형식 ("yyyy-MM")
+    - 주소: v1/schedule/getMonthlyTotal
+    - 반환: int[] 
+        - int[0]: 수입
+        - int[1]: 지출
+    - 해당하는 달의 고정 수입, 지출 총 금액
+    
+    ### getMonthlyCategory
+    - 형식: GET
+    - Parameter: nowDate(String) - 형식 ("yyyy-MM")
+    - 주소: v1/schedule/getMonthlyCategory
+    - 반환: Map\<String, List\<String\>\>
+    - 해당 달의 날짜별 카테고리(아이콘 표시용)
+    - 같은 날에 고정 일정이 여러 개면 카테고리도 여러 개 반환됨!
     
 ### modify
 - 형식: PUT
