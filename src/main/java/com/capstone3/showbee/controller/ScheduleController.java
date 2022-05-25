@@ -62,4 +62,9 @@ public class ScheduleController {
         return scheduleService.getCategoryMonthly(request, nowDate);
     }
 
+    @GetMapping("/getShared") //공유 일정만
+    public List<Schedule> findShared(HttpServletRequest request){
+        return scheduleService.findShared(request);
+    }
+
 }

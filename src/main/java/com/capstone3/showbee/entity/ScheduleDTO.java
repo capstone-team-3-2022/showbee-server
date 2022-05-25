@@ -33,7 +33,9 @@ public class ScheduleDTO {
     @Column(nullable = false)
     private String category;
     @Getter
-    private List<String> participant;
+    private List<String> participant; //참가자 가져오기??
+
+    @Column(nullable = false)
     private boolean inoutcome;
 
     public Schedule toEntity(User user){
