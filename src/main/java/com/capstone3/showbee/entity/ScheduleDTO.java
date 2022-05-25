@@ -35,7 +35,8 @@ public class ScheduleDTO {
     @Getter
     private List<String> participant;
     private boolean inoutcome;
-    public Schedule toEntity(User user) throws ParseException {
+
+    public Schedule toEntity(User user){
         return Schedule.builder()
                 .content(content).user(user).price(price).date(date).cycle(cycle).shared(shared).stitle(stitle).category(category)
                 .sId(sId).inoutcome(inoutcome)

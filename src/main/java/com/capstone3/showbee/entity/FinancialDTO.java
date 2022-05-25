@@ -20,6 +20,7 @@ public class FinancialDTO {
     @Column(nullable = false)
     private String content;
     private String category;
+    @Column(nullable = false)
     private int price;
     private String bank;
     private String memo;
