@@ -39,15 +39,22 @@ public class ScheduleService {
         return sch;
     }
 
-
-    public List<Schedule> findAllByUser(HttpServletRequest request) {
+    public List<Schedule> findShared(HttpServletRequest request){
         User loginUser = userService.getUser(request);
-        return scheduleRepository.findAllByUser(loginUser);
+        List<Schedule> schl = scheduleRepository.findAllByUser(loginUser);
+        List<Schedule> schedules = new ArrayList<>();
+        for(Schedule s: schl){
+            if(s.getShared()){
+                schedules.add(s);
+            }
+        }
+        return schedules;
     }
 
+
     public List<Schedule> findAll(HttpServletRequest request) {
-        List<Schedule> result = findAllByUser(request);
         User loginUser = userService.getUser(request);
+        List<Schedule> result = scheduleRepository.findAllByUser(loginUser);
         List<Shared> sresult = sharedRepository.findAllByUser(loginUser);
         for (Shared sh : sresult) {
             Schedule schedule = sh.getSchedule();
@@ -69,7 +76,6 @@ public class ScheduleService {
     public Schedule update(HttpServletRequest request, ScheduleDTO scheduleDTO) throws ParseException {
         Long sid = scheduleDTO.getSId();
         Optional<Schedule> result = scheduleRepository.findById(sid);
-        User loginUser = userService.getUser(request);
         if(result.isPresent()){
             List<Shared> sharedSch = sharedRepository.findAllBySchedule(scheduleRepository.getById(sid));
             if (!sharedSch.isEmpty()) {
@@ -112,7 +118,7 @@ public class ScheduleService {
 
     public int[] monthlyTotal(HttpServletRequest request, String nowDate) {
         String nextDate = financialService.getNextDate(nowDate);
-        List<Schedule> result = findAllByUser(request);
+        List<Schedule> result = findAll(request);
         int income = 0;
         int outcome = 0;
         for(Schedule s: result){

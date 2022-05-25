@@ -30,8 +30,9 @@ public class Schedule {
     @JsonIgnore
     private User user; //일정 추가한 사람
     private boolean inoutcome;
-//    @OneToMany(cascade = CascadeType.ALL)
-//    private List<Shared> participant;
+
+//    @OneToMany
+//    private List<User> participant;
 
     @Builder
     public Schedule(boolean inoutcome, Long sId, User user, String category, String stitle, String content, Integer price, LocalDate date, Integer cycle, Boolean shared) {
