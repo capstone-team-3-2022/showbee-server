@@ -142,10 +142,10 @@ port: 8081
     
 ### modify
 - 형식: PUT
-- Body: post와 동일
+- Body: post와 동일 + "sid": {변경할 일정의 sid}
 - 주소: v1/schedule/modify
 - Header에 로그인 토큰 필요
-- 변경하지 않은 것도 그대로 받아와서 등록과 똑같은 파라미터로 넘겨주세요
+- 변경하지 않은 것도 그대로 받아와서 등록과 똑같은 Body 요소로 넘겨주세요
 
 
 ### delete
