@@ -101,10 +101,12 @@ port: 8081
     - Query: password
     - 주소: v1/user/modify/pwd
     
+---
     
 ## Schedule
     Date 형식: yyyy-MM-dd
     Body로 넘겨주세요
+    필수 요소: participant 제외 모두
     
 ### post
 - 형식: POST
@@ -140,6 +142,15 @@ port: 8081
     - 해당 달의 날짜별 카테고리(아이콘 표시용)
     - 같은 날에 고정 일정이 여러 개면 카테고리도 여러 개 반환됨!
     
+    ### getShared
+    - 형식: GET
+    - Parameter 없음
+    - Header에 로그인 토큰 필요
+    - 주소: v1/schedule/getShared
+    - 반환: List\<Schedule\> 
+    - 로그인한 유저의 일정 중 공유된 일정 반환
+    
+    
 ### modify
 - 형식: PUT
 - Body: post와 동일 + "sid": {변경할 일정의 sid}
@@ -155,10 +166,12 @@ port: 8081
 - 가계부 고유 키(sid)로 삭제
 - 현재 공유된 일정은 삭제 안 됨 
     
+---
 ## Financial
     : 가계부
     date 형식: yyyy-MM-dd
     Body로 넘겨주세요
+    필수 요소: price, date, content, inoutcome
 
 
 ### post
