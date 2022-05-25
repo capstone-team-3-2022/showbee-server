@@ -67,9 +67,9 @@ public class ScheduleService {
     }
 
     public Schedule update(HttpServletRequest request, ScheduleDTO scheduleDTO) throws ParseException {
-        User loginUser = userService.getUser(request);
         Long sid = scheduleDTO.getSId();
         Optional<Schedule> result = scheduleRepository.findById(sid);
+        User loginUser = userService.getUser(request);
         if(result.isPresent()){
             List<Shared> sharedSch = sharedRepository.findAllBySchedule(scheduleRepository.getById(sid));
             if (!sharedSch.isEmpty()) {
@@ -80,7 +80,7 @@ public class ScheduleService {
                 }
             }
         }
-        return scheduleRepository.save(scheduleDTO.toEntity(loginUser));
+        return save(request, scheduleDTO);
     }
 
     //inoutcome아니고 category
@@ -89,7 +89,6 @@ public class ScheduleService {
         User loginUser = userService.getUser(request);
         List<Schedule> result = scheduleRepository.findAllByUser(loginUser);
         String nextDate = financialService.getNextDate(nowDate);
-
         for (Schedule s : result) {
             LocalDate date = s.getDate();
             String stringDate = date.toString(); //가계부에 있는 데이터들의 날짜
@@ -113,7 +112,6 @@ public class ScheduleService {
 
     public int[] monthlyTotal(HttpServletRequest request, String nowDate) {
         String nextDate = financialService.getNextDate(nowDate);
-        User loginUser = userService.getUser(request);
         List<Schedule> result = findAllByUser(request);
         int income = 0;
         int outcome = 0;

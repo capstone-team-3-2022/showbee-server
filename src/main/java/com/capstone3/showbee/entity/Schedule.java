@@ -15,10 +15,10 @@ import java.util.List;
 @Entity
 @Table(name = "Schedule")
 @NoArgsConstructor
+@Setter
 public class Schedule {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sId;
-
     private String stitle;
     private String content;
     private Integer price;
