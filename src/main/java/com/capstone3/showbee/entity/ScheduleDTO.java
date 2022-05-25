@@ -1,10 +1,13 @@
 package com.capstone3.showbee.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -14,14 +17,20 @@ import java.util.List;
 @Data
 public class ScheduleDTO {
     private Long sId;
-
+    @Column(nullable = false)
     private String stitle;
+    @Column(nullable = false)
     private String content;
+    @Column(nullable = false)
     private Integer price;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date date;
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
+    @Column(nullable = false)
+    private LocalDate date;
+    @Column(nullable = false)
     private Boolean shared;
+    @Column(nullable = false)
     private Integer cycle;
+    @Column(nullable = false)
     private String category;
     @Getter
     private List<String> participant;

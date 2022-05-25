@@ -1,10 +1,12 @@
 package com.capstone3.showbee.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -15,8 +17,8 @@ import java.util.Date;
 public class Financial {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long fid;
-    private Date date;
     private int price;
+    private LocalDate date;
     private String content;
     private String category;
     private String bank;
@@ -32,7 +34,7 @@ public class Financial {
     }
 
     @Builder
-    public Financial(Date date, int price, String content, String category, User user, Long fid, String bank, String memo, boolean inoutcome){
+    public Financial(LocalDate date, int price, String content, String category, User user, Long fid, String bank, String memo, boolean inoutcome){
         this.category = category;
         this.date = date;
         this.content = content;

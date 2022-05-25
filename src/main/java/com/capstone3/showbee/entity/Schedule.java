@@ -1,11 +1,13 @@
 package com.capstone3.showbee.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.lang.module.FindException;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class Schedule {
     private String stitle;
     private String content;
     private Integer price;
-    private Date date;
+    private LocalDate date;
     private Boolean shared;
     private Integer cycle;
     private String category;
@@ -32,7 +34,7 @@ public class Schedule {
 //    private List<Shared> participant;
 
     @Builder
-    public Schedule(boolean inoutcome, Long sId, User user, String category, String stitle, String content, Integer price, Date date, Integer cycle, Boolean shared) {
+    public Schedule(boolean inoutcome, Long sId, User user, String category, String stitle, String content, Integer price, LocalDate date, Integer cycle, Boolean shared) {
         this.content = content;
         this.price = price;
         this.date = date;

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 import java.util.*;
 
 @Service
@@ -49,7 +50,7 @@ public class FinancialService {
         List<MonthlyFinancial> mfl;
         String nextDate = getNextDate(nowDate);
         for(Financial f: allf){
-            Date date = f.getDate();
+            LocalDate date = f.getDate();
             String stringDate = date.toString();
             if (stringDate.compareTo(nowDate) >= 0 && stringDate.compareTo(nextDate) < 0) {
                 String day = stringDate.substring(8,10);
@@ -57,12 +58,11 @@ public class FinancialService {
                         .price(f.getPrice()).inoutcome(f.getInoutcome()).content(f.getContent()).category(f.getCategory()).fid(f.getFid()).build();
                 if (getf.containsKey(day)){
                     mfl= getf.get(day);
-                    mfl.add(mf);
 
                 } else {
                     mfl = new ArrayList<>();
-                    mfl.add(mf);
                 }
+                mfl.add(mf);
                 getf.put(day, mfl);
             }
         }
@@ -76,12 +76,11 @@ public class FinancialService {
         String nextDate = getNextDate(nowDate);
 
         for (Financial f : result) {
-            Date date = f.getDate();
+            LocalDate date = f.getDate();
             String stringDate = date.toString(); //가계부에 있는 데이터들의 날짜
             if (stringDate.compareTo(nowDate) >= 0 && stringDate.compareTo(nextDate) < 0) {
                 int[] money;
                 String day = stringDate.substring(8,10);
-                System.out.println(day);
                 if (dateMap.containsKey(day)) money = new int[]{dateMap.get(day)[0], dateMap.get(day)[1]};
                 else money = new int[]{0, 0};
 
@@ -100,7 +99,7 @@ public class FinancialService {
         int income = 0;
         int outcome = 0;
         for(Financial f: result){
-            Date date = f.getDate();
+            LocalDate date = f.getDate();
             String stringDate = date.toString();
             if(stringDate.compareTo(nowDate) >= 0 && stringDate.compareTo(nextDate) < 0){
                 if (f.getInoutcome()) income += f.getPrice();

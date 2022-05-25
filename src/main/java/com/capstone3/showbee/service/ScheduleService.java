@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.*;
 
 //@RequiredArgsConstructor
@@ -23,6 +24,7 @@ public class ScheduleService {
     private final SharedRepository sharedRepository;
     private final UserService userService;
     private final UserJpaRepository userJpaRepository;
+    private final FinancialService financialService;
 
     @Transactional
     public Schedule save(HttpServletRequest request, final ScheduleDTO scheduleDTO) throws ParseException {
@@ -86,17 +88,16 @@ public class ScheduleService {
         Map<String, List<String>> monthlyMap = new TreeMap<>();
         User loginUser = userService.getUser(request);
         List<Schedule> result = scheduleRepository.findAllByUser(loginUser);
-        String nextDate = getNextDate(nowDate);
+        String nextDate = financialService.getNextDate(nowDate);
 
         for (Schedule s : result) {
-            Date date = s.getDate();
+            LocalDate date = s.getDate();
             String stringDate = date.toString(); //가계부에 있는 데이터들의 날짜
             if (stringDate.compareTo(nowDate) >= 0 && stringDate.compareTo(nextDate) < 0) {
                 List<String> category = new ArrayList<>();
                 String day = stringDate.substring(8,10);
                 if (monthlyMap.containsKey(day)) { //기존 map에 해당 날짜가 있을 때(중복 데이터)
                     category = monthlyMap.get(day);
-                    System.out.println("category: "+ category);
                     category.add(s.getCategory());
                     //category에 또 다른 카테고리 추가하고 해당 날짜의 date에 다시 Put
                 }
@@ -111,13 +112,13 @@ public class ScheduleService {
     }
 
     public int[] monthlyTotal(HttpServletRequest request, String nowDate) {
-        String nextDate = getNextDate(nowDate);
+        String nextDate = financialService.getNextDate(nowDate);
         User loginUser = userService.getUser(request);
         List<Schedule> result = findAllByUser(request);
         int income = 0;
         int outcome = 0;
         for(Schedule s: result){
-            Date date = s.getDate();
+            LocalDate date = s.getDate();
             String stringDate = date.toString();
             if(stringDate.compareTo(nowDate) >= 0 && stringDate.compareTo(nextDate) < 0){
                 if (s.getInoutcome()) income += s.getPrice();
@@ -127,24 +128,4 @@ public class ScheduleService {
         return new int[]{income, outcome};
     }
 
-    public String getNextDate(String nowDate) {
-        String year = nowDate.substring(0, 5);
-        int month = Integer.parseInt(nowDate.substring(5));
-        month++;
-        String nextDate = "";
-        switch (month) {
-            case 13:
-                month = 1;
-                int nextyear = Integer.parseInt(year.substring(0, 4)) + 1;
-                year = Integer.toString(nextyear) + "-";
-            default:
-                nextDate = year + "0" + Integer.toString(month);
-                break;
-            case 12:
-            case 11:
-                nextDate = year + Integer.toString(month);
-                break;
-        }
-        return nextDate;
-    }
 }
