@@ -48,10 +48,12 @@ port: 8081
     
 주소
 117.17.102.143:8081/
+  
     
+- Header에 토큰 값: “X-AUTH-TOKEN” value에 로그인 했을 때의 token 값 넣기
+
 
 ## User
-- Header에 “X-AUTH-TOKEN” value에 로그인 했을 때의 token 값 넣기
 
 
 ### Sign up(회원가입)
