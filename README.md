@@ -1,6 +1,11 @@
 # Showbee
 ## Capstone3 Project
 
+: api 설명 바로가기 
+1. [User](https://github.com/capstone-team-3-2022/showbee-server/edit/main/README.md#user)
+2. [Schedule](https://github.com/capstone-team-3-2022/showbee-server/edit/main/README.md#schedule)
+3. [Financial](https://github.com/capstone-team-3-2022/showbee-server/edit/main/README.md#financial)
+
 ## DB table
 | User | 타입 | 설명 |
 | --- | --- | --- |
@@ -50,7 +55,7 @@ port: 8081
 117.17.102.143:8081/
   
     
-- Header에 토큰 값: “X-AUTH-TOKEN” value에 로그인 했을 때의 token 값 넣기
+    Header에 토큰 값: “X-AUTH-TOKEN” value에 로그인 했을 때의 token 값 넣기
 
 
 ## User
@@ -159,6 +164,7 @@ port: 8081
 - 주소: v1/schedule/modify
 - Header에 로그인 토큰 필요
 - 변경하지 않은 것도 그대로 받아와서 등록과 똑같은 Body 요소로 넘겨주세요
+- sid로 소문자로 해야 넘어감..! 왜인지는 나도 모르는데 sId로 했더니 자꾸 null로 넘어가더라고
 
 
 ### delete
