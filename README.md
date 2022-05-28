@@ -2,9 +2,9 @@
 ## Capstone3 Project
 
 : api 설명 바로가기 
-1. [User](https://github.com/capstone-team-3-2022/showbee-server/edit/main/README.md#user)
-2. [Schedule](https://github.com/capstone-team-3-2022/showbee-server/edit/main/README.md#schedule)
-3. [Financial](https://github.com/capstone-team-3-2022/showbee-server/edit/main/README.md#financial)
+1. [User](https://github.com/capstone-team-3-2022/showbee-server/blob/main/README.md#user)
+2. [Schedule](https://github.com/capstone-team-3-2022/showbee-server/blob/main/README.md#schedule)
+3. [Financial](https://github.com/capstone-team-3-2022/showbee-server/blob/main/README.md#financial)
 
 ## DB table
 | User | 타입 | 설명 |
