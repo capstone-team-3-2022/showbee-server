@@ -124,45 +124,53 @@ port: 8081
 - 참가자는 이메일로 추가
 - shared(boolean)은 참가자 있을 때 true로 넘겨주면 됨 
 
+    
+### getMonthly
+- 형식: GET
+- Query: String nowDate("yyyy-MM")
+- 주소: v1/schedule/getMonthlyTotal
+- 반환: int[] 
+    - int[0]: 수입
+    - int[1]: 지출
+- 해당하는 달의 고정 수입, 지출 총 금액
+- Header에 로그인 토큰 필요
 
-### get
+
+### getMonthly
 - 형식: GET
-- Parameter 없음, Header에 로그인 토큰 필요
-- 주소: v1/schedule/get
-- 로그인한 유저의 일정 조회
-- 반환: List\<Schedule\>
-    
-    ### getMonthly
-    - 형식: GET
-    - Query: nowDate(String) - 형식 ("yyyy-MM")
-    - 주소: v1/schedule/getMonthlyTotal
-    - 반환: int[] 
-        - int[0]: 수입
-        - int[1]: 지출
-    - 해당하는 달의 고정 수입, 지출 총 금액
-    
-    ### getMonthly
-    - 형식: GET
-    - Query: nowDate(String) - 형식 ("yyyy-MM")
-    - 주소: v1/schedule/getMonthly
-    - 반환: Map\<String, List\<String\>\>
-    - 해당 달의 날짜별 카테고리(아이콘 표시용)
-    - 같은 날에 고정 일정이 여러 개면 카테고리도 여러 개 반환됨!
-    
-    ### getShared
-    - 형식: GET
-    - Parameter 없음
-    - Header에 로그인 토큰 필요
-    - 주소: v1/schedule/getShared
-    - 반환: List\<Schedule\> 
-    - 로그인한 유저의 일정 중 공유된 일정 반환
+- Query: String nowDate("yyyy-MM")
+- 주소: v1/schedule/getMonthly
+- 반환: Map\<String, List\<String\>\>
+- 해당 달의 날짜별 카테고리(아이콘 표시용)
+- 같은 날에 고정 일정이 여러 개면 카테고리도 여러 개 반환됨!
+- Header에 로그인 토큰 필요
+
+
+### getShared
+- 형식: GET
+- Parameter 없음
+- Header에 로그인 토큰 필요
+- 주소: v1/schedule/getShared
+- 반환: List\<Schedule\> 
+- 로그인한 유저의 일정 중 공유된 일정 반환
+
     
 ### get
 - 형식: GET
-- Parameter: sid(long)
+- Query: sid(long)
 - 주소: v1/schedule/get
 - 반환: Optional\<Schedule\>
 - 해당 sid의 일정 내용을 받아옴
+    
+    
+### getlist
+- 형식: GET
+- Query: String nowDate("yyyy-MM")
+- 주소: v1/schedule/getlist
+- 반환: Map\<String, List\<\>\>
+- 해당 달의 sid, 제목, 금액 반환
+- Header에 로그인 토큰 필요
+
     
 ### modify
 - 형식: PUT
@@ -178,7 +186,6 @@ port: 8081
 - PathVar: fid    
 - 주소: v1/schedule/delete/{sid}
 - 가계부 고유 키(sid)로 삭제
-- 현재 공유된 일정은 삭제 안 됨 
     
 ---
 ## Financial
@@ -234,7 +241,7 @@ port: 8081
 - 주소: v1/financial/getlist
 - Query: String nowDate("yyyy-MM")
 - nowDate에 해당하는 달의 가계부
-- 반환: Map<String, List<>>
+- 반환: Map\<String, List\<\>\>
 - 로그인 토큰 필요
 
     
