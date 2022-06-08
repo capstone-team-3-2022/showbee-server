@@ -144,7 +144,7 @@ port: 8081
     ### getMonthly
     - 형식: GET
     - Query: nowDate(String) - 형식 ("yyyy-MM")
-    - 주소: v1/schedule/getMonthlyCategory
+    - 주소: v1/schedule/getMonthly
     - 반환: Map\<String, List\<String\>\>
     - 해당 달의 날짜별 카테고리(아이콘 표시용)
     - 같은 날에 고정 일정이 여러 개면 카테고리도 여러 개 반환됨!
