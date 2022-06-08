@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value="v1/schedule")
@@ -65,6 +66,11 @@ public class ScheduleController {
     @GetMapping("/getShared") //공유 일정만
     public List<Schedule> findShared(HttpServletRequest request){
         return scheduleService.findShared(request);
+    }
+
+    @GetMapping("/get")
+    public Optional<Schedule> get(Long sid){
+        return  scheduleRepository.findById(sid);
     }
 
 }

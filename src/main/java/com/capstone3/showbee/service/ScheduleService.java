@@ -98,22 +98,39 @@ public class ScheduleService {
         for (Schedule s : result) {
             LocalDate date = s.getDate();
             String stringDate = date.toString(); //가계부에 있는 데이터들의 날짜
+            int c = s.getCycle();
+            while(stringDate.compareTo(nowDate)<0){
+                date = putCycle(date, c);
+                stringDate = date.toString();
+//                System.out.println(stringDate);
+            }
             if (stringDate.compareTo(nowDate) >= 0 && stringDate.compareTo(nextDate) < 0) {
-                List<String> category = new ArrayList<>();
-                String day = stringDate.substring(8,10);
-                if (monthlyMap.containsKey(day)) { //기존 map에 해당 날짜가 있을 때(중복 데이터)
-                    category = monthlyMap.get(day);
+                while(stringDate.compareTo(nextDate)<0){
+                    List<String> category = new ArrayList<>();
+                    System.out.println(stringDate);
+                    String day = stringDate.substring(8,10);
+                    if (monthlyMap.containsKey(day)) { //기존 map에 해당 날짜가 있을 때(중복 데이터)
+                        category = monthlyMap.get(day);
+                        //category에 또 다른 카테고리 추가하고 해당 날짜의 date에 다시 Put
+                    }
                     category.add(s.getCategory());
-                    //category에 또 다른 카테고리 추가하고 해당 날짜의 date에 다시 Put
-                }
-                else {
-                    category.add(s.getCategory());
-                }
+                    monthlyMap.put(day, category);
+                    date = putCycle(date, c);
+                    stringDate = date.toString();
 
-                monthlyMap.put(day, category);
+                }
             }
         }
         return monthlyMap;
+    }
+
+    public LocalDate putCycle(LocalDate date, int c) {
+        switch (c){
+            case 7: date = date.plusDays(7); break;
+            case 14: date = date.plusDays(14); break;
+            case 1: date = date.plusMonths(1); break;
+        }
+        return date;
     }
 
     public int[] monthlyTotal(HttpServletRequest request, String nowDate) {
