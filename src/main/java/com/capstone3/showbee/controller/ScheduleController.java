@@ -5,6 +5,7 @@ import com.capstone3.showbee.entity.ScheduleDTO;
 import com.capstone3.showbee.entity.User;
 import com.capstone3.showbee.model.CommonResult;
 import com.capstone3.showbee.model.ListResult;
+import com.capstone3.showbee.model.MonthlySchedule;
 import com.capstone3.showbee.model.SingleResult;
 import com.capstone3.showbee.repository.ScheduleRepository;
 import com.capstone3.showbee.service.ResponseService;
@@ -72,5 +73,11 @@ public class ScheduleController {
     public Optional<Schedule> get(Long sid){
         return  scheduleRepository.findById(sid);
     }
+
+    @GetMapping("/getlist")
+    public Map<String, List<MonthlySchedule>> getlist(HttpServletRequest request, String nowDate){
+        return scheduleService.getMonthList(request, nowDate);
+    }
+
 
 }

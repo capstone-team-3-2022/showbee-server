@@ -2,6 +2,8 @@ package com.capstone3.showbee.service;
 
 import com.capstone3.showbee.entity.*;
 import com.capstone3.showbee.jwt.JwtTokenProvider;
+import com.capstone3.showbee.model.MonthlyFinancial;
+import com.capstone3.showbee.model.MonthlySchedule;
 import com.capstone3.showbee.repository.ScheduleRepository;
 import com.capstone3.showbee.repository.SharedRepository;
 import com.capstone3.showbee.repository.UserJpaRepository;
@@ -102,12 +104,10 @@ public class ScheduleService {
             while(stringDate.compareTo(nowDate)<0){
                 date = putCycle(date, c);
                 stringDate = date.toString();
-//                System.out.println(stringDate);
             }
             if (stringDate.compareTo(nowDate) >= 0 && stringDate.compareTo(nextDate) < 0) {
                 while(stringDate.compareTo(nextDate)<0){
                     List<String> category = new ArrayList<>();
-                    System.out.println(stringDate);
                     String day = stringDate.substring(8,10);
                     if (monthlyMap.containsKey(day)) { //기존 map에 해당 날짜가 있을 때(중복 데이터)
                         category = monthlyMap.get(day);
@@ -149,4 +149,40 @@ public class ScheduleService {
         return new int[]{income, outcome};
     }
 
+    public Map<String, List<MonthlySchedule>> getMonthList(HttpServletRequest request, String nowDate){
+        Map<String, List<MonthlySchedule>> gets = new TreeMap<>();
+        User loginUser = userService.getUser(request);
+        List<Schedule> alls = scheduleRepository.findAllByUser(loginUser);
+        List<MonthlySchedule> msl;
+        String nextDate = financialService.getNextDate(nowDate);
+        for(Schedule s: alls){
+            LocalDate date = s.getDate();
+            String stringDate = date.toString();
+            int c = s.getCycle();
+            while(stringDate.compareTo(nowDate)<0){
+                date = putCycle(date, c);
+                stringDate = date.toString();
+//                System.out.println(stringDate);
+            }
+            if (stringDate.compareTo(nowDate) >= 0 && stringDate.compareTo(nextDate) < 0) {
+                while(stringDate.compareTo(nextDate)<0){
+                    String day = stringDate.substring(8,10);
+                    MonthlySchedule ms =  MonthlySchedule.builder()
+                            .price(s.getPrice()).sid(s.getSId()).stitle(s.getStitle()).build();
+                    if (gets.containsKey(day)){
+                        msl= gets.get(day);
+
+                    } else {
+                        msl = new ArrayList<>();
+                    }
+                    msl.add(ms);
+                    gets.put(day, msl);
+                    date = putCycle(date, c);
+                    stringDate = date.toString();
+                }
+            }
+        }
+
+        return gets;
+    }
 }
