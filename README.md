@@ -112,7 +112,7 @@ port: 8081
     
 ## Schedule
     Date 형식: yyyy-MM-dd
-    Body로 넘겨주세요
+    Body(JSON)로 넘겨주세요
     필수 요소: participant 제외 모두
     
 ### post
@@ -125,7 +125,7 @@ port: 8081
 - shared(boolean)은 참가자 있을 때 true로 넘겨주면 됨 
 
     
-### getMonthly
+### getMonthlyTotal
 - 형식: GET
 - Query: String nowDate("yyyy-MM")
 - 주소: v1/schedule/getMonthlyTotal
