@@ -157,6 +157,12 @@ port: 8081
     - 반환: List\<Schedule\> 
     - 로그인한 유저의 일정 중 공유된 일정 반환
     
+### get
+- 형식: GET
+- Parameter: sid(long)
+- 주소: v1/schedule/get
+- 반환: Optional<Schedule>
+- 해당 sid의 일정 내용을 받아옴
     
 ### modify
 - 형식: PUT
