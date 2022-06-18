@@ -17,7 +17,7 @@ public class CustomUserDetailService implements UserDetailsService {
         return userJpaRepo.findById(Long.valueOf(userPK)).orElseThrow(CUserNotFoundException::new);
     }
 
-    public boolean checkEmailDuplicate(String email){
-        return userJpaRepo.existsByEmail(email);
-    }
+//    public boolean checkEmailDuplicate(String email){
+//        return userJpaRepo.existsByEmail(email);
+//    }
 }

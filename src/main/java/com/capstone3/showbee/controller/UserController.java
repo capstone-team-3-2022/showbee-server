@@ -27,66 +27,44 @@ import java.util.Optional;
 @RequestMapping("/v1/user")
 public class UserController {
 
-    private final UserJpaRepository userJpaRepository;
     private final UserService userService;
-    private final ResponseService responseService; //결과를 처리할 Service
-    private final PasswordEncoder passwordEncoder;
 
     @GetMapping(value = "/getall") //전체 회원 조회
-    public ListResult<User> findAllUser(){
-        return responseService.getListResult(userJpaRepository.findAll());
+    public ListResult<User> findAllUser() {
+        return userService.findAll();
     }
 
     @GetMapping(value = "/get") //조회
     public SingleResult<User> findUser(HttpServletRequest request){
-        User loginUser = userService.getUser(request);
-        return responseService.getSingleResult(userJpaRepository.findByEmail(loginUser.getEmail()).orElseThrow(CUserNotFoundException::new));
+        return userService.get(request);
     }
 
     @GetMapping(value = "/get/{email}")
     public SingleResult<User> findUserByEmail(@PathVariable String email){
-        return responseService.getSingleResult(userJpaRepository.findByEmail(email).orElseThrow(CUserNotFoundException::new));
+        return userService.findUserByEmail(email);
     }
+
 
     @PutMapping(value = "/modify/name")
     public boolean modifyName(HttpServletRequest request, @RequestParam String name){
-        User loginUser = userService.getUser(request);
-        if(name==null||name.equals("")) return false;
-        else{
-            User user = User.builder()
-                    .id(loginUser.getId()).name(name).email(loginUser.getEmail()).password(loginUser.getPassword())
-                    .roles(Collections.singletonList("ROLE_USER")).build();
-            userJpaRepository.save(user);
-            return true;
-        }
+        return userService.modifyname(request, name);
     }
 
     @PutMapping(value = "/modify/pwd")
     public boolean modifyPwd(HttpServletRequest request, @RequestParam String password){
-        User loginUser = userService.getUser(request);
-        if(password==null||password.equals("")) return false;
-        else{
-            User user = User.builder()
-                    .id(loginUser.getId()).name(loginUser.getName()).email(loginUser.getEmail()).password(passwordEncoder.encode(password))
-                    .roles(Collections.singletonList("ROLE_USER")).build();
-            userJpaRepository.save(user);
-            return true;
-        }
+        return userService.modifyPwd(request, password);
     }
 
 
     @DeleteMapping(value = "/delete")
     public CommonResult delete(HttpServletRequest request){
-        User user = userService.getUser(request);
-        userJpaRepository.deleteById(user.getId());
-        return responseService.getSuccessResult();
+        return userService.deleteUser(request);
     }
 
 
     @DeleteMapping(value = "/delete/{id}")
     public CommonResult deleteById(@PathVariable Long id){
-        userJpaRepository.deleteById(id);
-        return responseService.getSuccessResult();
+        return userService.deleteById(id);
     }
 
 }
