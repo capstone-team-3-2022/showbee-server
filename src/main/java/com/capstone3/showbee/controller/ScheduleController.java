@@ -70,8 +70,8 @@ public class ScheduleController {
     }
 
     @GetMapping("/get")
-    public Optional<Schedule> get(Long sid){
-        return  scheduleRepository.findById(sid);
+    public ScheduleDTO get(Long sid){
+        return  scheduleService.getById(sid);
     }
 
     @GetMapping("/getlist")

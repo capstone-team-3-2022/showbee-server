@@ -34,6 +34,7 @@ public class ScheduleService {
         Schedule sch = scheduleRepository.save(scheduleDTO.toEntity(loginUser));
         if (scheduleDTO.toEntity(loginUser).getShared()) {
             for (String email : scheduleDTO.getParticipant()) {
+
                 Shared sh = Shared.builder().user(userJpaRepository.findByEmail(email).get()).schedule(sch).build();
                 sharedRepository.save(sh);
             }
@@ -51,6 +52,22 @@ public class ScheduleService {
             }
         }
         return schedules;
+    }
+
+    public ScheduleDTO getById(Long sid){
+        Optional<Schedule> s = scheduleRepository.findById(sid);
+        List<String> participant = new ArrayList<>();
+        if(s.isPresent()){
+            Schedule schedule = s.get();
+            List<Shared> sresult = sharedRepository.findAllBySchedule(schedule);
+            for(Shared sh:sresult){
+                String uEmail = sh.getUser().getEmail();
+                participant.add(uEmail);
+            }
+            return schedule.ScheduleToDTO(participant);
+        }else{
+            return null;
+        }
     }
 
 

@@ -31,11 +31,8 @@ public class Schedule {
     private User user; //일정 추가한 사람
     private boolean inoutcome;
 
-//    @OneToMany
-//    private List<User> participant;
-
     @Builder
-    public Schedule(boolean inoutcome, Long sId, User user, String category, String stitle, String content, Integer price, LocalDate date, Integer cycle, Boolean shared) {
+    public Schedule(boolean inoutcome, Long sId, User user, String category, String stitle, String content, Integer price, LocalDate date, Integer cycle, Boolean shared, List<String> participant) {
         this.content = content;
         this.price = price;
         this.date = date;
@@ -48,9 +45,17 @@ public class Schedule {
         this.inoutcome = inoutcome;
     }
 
+
+
     public boolean getInoutcome(){
         return this.inoutcome;
     }
 
 
+    public ScheduleDTO ScheduleToDTO(List<String> participant){
+        return ScheduleDTO.builder()
+                .sId(sId).content(content).stitle(stitle).price(price).date(date).cycle(cycle).shared(shared)
+                .category(category).inoutcome(inoutcome).shared(shared).participant(participant)
+                .build();
+    }
 }
