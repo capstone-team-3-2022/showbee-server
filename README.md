@@ -159,7 +159,7 @@ port: 8081
 - 형식: GET
 - Query: sid(long)
 - 주소: v1/schedule/get
-- 반환: Optional\<Schedule\>
+- 반환: Optional\<ScheduleDTO\>
 - 해당 sid의 일정 내용을 받아옴
     
     
