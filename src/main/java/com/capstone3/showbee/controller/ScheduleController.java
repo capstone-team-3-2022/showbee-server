@@ -2,23 +2,17 @@ package com.capstone3.showbee.controller;
 
 import com.capstone3.showbee.entity.Schedule;
 import com.capstone3.showbee.entity.ScheduleDTO;
-import com.capstone3.showbee.entity.User;
 import com.capstone3.showbee.model.CommonResult;
-import com.capstone3.showbee.model.ListResult;
 import com.capstone3.showbee.model.MonthlySchedule;
-import com.capstone3.showbee.model.SingleResult;
 import com.capstone3.showbee.repository.ScheduleRepository;
 import com.capstone3.showbee.service.ResponseService;
 import com.capstone3.showbee.service.ScheduleService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value="v1/schedule")

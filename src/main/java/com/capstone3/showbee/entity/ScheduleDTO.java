@@ -2,13 +2,8 @@ package com.capstone3.showbee.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.Column;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Builder
@@ -46,16 +41,5 @@ public class ScheduleDTO {
     }
 
 
-//    @Builder
-//    public ScheduleDTO(String stitle, String category, String content, Integer price, Date date, Integer cycle, Boolean shared, List<String> participant) {
-//        this.content = content;
-//        this.price = price;
-//        this.date = date;
-//        this.cycle = cycle;
-//        this.shared = shared;
-//        this.stitle = stitle;
-//        this.participant = participant;
-//        this.category = category;
-//    }
 
 }

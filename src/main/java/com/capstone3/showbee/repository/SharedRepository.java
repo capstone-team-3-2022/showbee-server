@@ -11,5 +11,4 @@ import java.util.Optional;
 public interface SharedRepository extends JpaRepository<Shared, Long> {
     List<Shared> findAllByUser(User user);
     List<Shared> findAllBySchedule(Schedule schedule);
-//    List<Shared> findAllBySId(Long sId);
 }

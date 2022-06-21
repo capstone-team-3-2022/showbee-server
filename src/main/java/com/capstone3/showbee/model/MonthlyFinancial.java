@@ -16,13 +16,5 @@ public class MonthlyFinancial {
     private String content;
     private boolean inoutcome;
 
-//    @Builder
-//    public MonthlyFinancial(long fid, int price, String category, String content, boolean inoutcome){
-//        this.category = category;
-//        this.fid = fid;
-//        this.price = price;
-//        this.content = content;
-//        this.inoutcome = inoutcome;
-//    }
 
 }
