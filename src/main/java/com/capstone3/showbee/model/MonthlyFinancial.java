@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 @Setter
 @Builder
 public class MonthlyFinancial {
-//    private String date;
     private long fid;
     private int price;
     private String category;

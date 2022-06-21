@@ -32,7 +32,7 @@ public class ScheduleDTO {
     private Integer cycle;
     @Column(nullable = false)
     private String category;
-    @Getter
+//    @Getter
     private List<String> participant; //참가자 가져오기??
 
     @Column(nullable = false)
@@ -41,11 +41,11 @@ public class ScheduleDTO {
     public Schedule toEntity(User user){
         return Schedule.builder()
                 .content(content).user(user).price(price).date(date).cycle(cycle).shared(shared).stitle(stitle).category(category)
-                .sId(sId).inoutcome(inoutcome)
+                .sId(sId).inoutcome(inoutcome).participant(participant)
                 .build();
     }
 
-//
+
 //    @Builder
 //    public ScheduleDTO(String stitle, String category, String content, Integer price, Date date, Integer cycle, Boolean shared, List<String> participant) {
 //        this.content = content;
