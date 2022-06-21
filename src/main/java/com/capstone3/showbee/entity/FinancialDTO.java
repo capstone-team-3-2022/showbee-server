@@ -5,11 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.Column;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -37,14 +34,6 @@ public class FinancialDTO {
                 .bank(bank).memo(memo).inoutcome(inoutcome)
                 .build();
     }
-
-//    @Builder
-//    public FinancialDTO(Date date, int price, String content, String category){
-//        this.category = category;
-//        this.date = date;
-//        this.content = content;
-//        this.price = price;
-//    }
 
 
 }

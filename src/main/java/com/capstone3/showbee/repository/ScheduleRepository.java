@@ -1,7 +1,6 @@
 package com.capstone3.showbee.repository;
 
 import com.capstone3.showbee.entity.Schedule;
-import com.capstone3.showbee.entity.ScheduleDTO;
 import com.capstone3.showbee.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

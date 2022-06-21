@@ -33,7 +33,6 @@ public class UserService {
     public User getUser(HttpServletRequest request){
         String token = jwtTokenProvider.resolveToken(request);
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
-
         return (User) authentication.getPrincipal();
     }
 

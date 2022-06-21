@@ -2,15 +2,12 @@ package com.capstone3.showbee.service;
 
 import com.capstone3.showbee.entity.Financial;
 import com.capstone3.showbee.entity.FinancialDTO;
-import com.capstone3.showbee.entity.Shared;
 import com.capstone3.showbee.entity.User;
 import com.capstone3.showbee.model.MonthlyFinancial;
 import com.capstone3.showbee.repository.FinancialRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.*;
@@ -56,12 +53,9 @@ public class FinancialService {
                 String day = stringDate.substring(8,10);
                 MonthlyFinancial mf =  MonthlyFinancial.builder()
                         .price(f.getPrice()).inoutcome(f.getInoutcome()).content(f.getContent()).category(f.getCategory()).fid(f.getFid()).build();
-                if (getf.containsKey(day)){
-                    mfl= getf.get(day);
+                if (getf.containsKey(day)) mfl= getf.get(day);
+                else mfl = new ArrayList<>();
 
-                } else {
-                    mfl = new ArrayList<>();
-                }
                 mfl.add(mf);
                 getf.put(day, mfl);
             }
