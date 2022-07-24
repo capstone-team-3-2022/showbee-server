@@ -53,9 +53,12 @@ port: 8081
     
 주소
 117.17.102.143:8081/
-  
     
-    Header에 토큰 값: “X-AUTH-TOKEN” value에 로그인 했을 때의 access token 값 넣기
+    - token 유지 시간
+    - access Token: 1시간
+    - refresh Token: 2주
+    
+    - Header 토큰 값: “X-AUTH-TOKEN” value에 로그인 했을 때의 access token 값 넣기
 
 
 ## User
@@ -64,25 +67,35 @@ port: 8081
 ### Sign up(회원가입)
 - 형식: POST
 - Query: email, name, password
-- 주소: v1/signup
+- 주소: v1\/signup
     
     #### 이메일 중복체크
     - 형식: GET
     - PathVar: email
-    - v1/check/{email}
+    - v1\/check\/{email}
     - 중복이면 true 반환
 
 ### Sign in(로그인)
 - 형식: POST
 - Query: email, password
-- 주소: v1/signin
-- 반환
+- 주소: v1\/signin
+- 반환 (json)
     - accessToken value
     - refreshToken value
     - grantType: "Bearer"
     - accessTokenExpired: AccessToken 만료 시간 (milisecond 기준)
 
+### Token 재발급
+- 형식: POST
+- Body: 로그인한 반환값 모두(accessToken, refreshToken, grantType, accessTokenExpired)
+- 주소: v1/reissue
+- 반환 (json)
+    - accessToken value
+    - refreshToken value
+    - grantType: "Bearer"
+    - accessTokenExpired: AccessToken 만료 시간 (milisecond 기준)
 
+    
 ### 조회
 - 형식: GET
 - Parameter: 없음
