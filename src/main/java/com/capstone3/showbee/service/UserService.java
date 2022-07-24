@@ -78,12 +78,16 @@ public class UserService {
         Authentication authentication = jwtTokenProvider.getAuthentication(accessToken);
 
         //user pk로 user 검색 - repos에 저장된 refresh token이 없음?
-        User user = userRepository.findById(Long.parseLong(authentication.getName())).orElseThrow(CUserNotFoundException::new);
+        User user = (User) authentication.getPrincipal();
+
+//        User user = userRepository.findById(loginUser.getId()).orElseThrow(CUserNotFoundException::new);
         RefreshToken refreshToken = refreshTokenRepository.findByKey(user.getId()).orElseThrow(CRefreshTokenException::new);
 
         //access, refresh token 재발급 + refresh token save
         TokenDTO newCreatedToken = jwtTokenProvider.createToken(user.getId(), user.getRoles());
-        RefreshToken updateRefreshToken = refreshToken.updateToken(newCreatedToken.getRefreshToken());
+
+
+        RefreshToken updateRefreshToken = refreshToken.builder().token(newCreatedToken.getRefreshToken()).key(user.getId()).rid(refreshToken.getRid()).build();
         refreshTokenRepository.save(updateRefreshToken);
         return newCreatedToken;
     }
