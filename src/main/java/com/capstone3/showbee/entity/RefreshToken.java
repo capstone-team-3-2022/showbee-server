@@ -1,5 +1,6 @@
 package com.capstone3.showbee.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,11 +12,12 @@ import java.util.StringTokenizer;
 @Table(name = "refresh_token")
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class RefreshToken {
-    @Id
-    private String rId;
-    @Column(nullable = false)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long rid;
+    @Column(nullable = false, name = "token_key")
     private Long key;
     @Column(nullable = false)
     private String token;

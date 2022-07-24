@@ -83,7 +83,7 @@ public class JwtTokenProvider {
     //jwt 토큰 복호화
     private Claims parseClaims(String token){
         try{
-            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+            return Jwts.parser().setSigningKey(secretKey.getBytes()).parseClaimsJws(token).getBody();
         }catch (ExpiredJwtException e){
             return e.getClaims();
         }
@@ -95,7 +95,7 @@ public class JwtTokenProvider {
     //jwt 유효성 및 만료일자 확인
     public boolean validateToken(String token) {
         try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            Jwts.parser().setSigningKey(secretKey.getBytes()).parseClaimsJws(token);
             return true;
         } catch (SecurityException | MalformedJwtException e) {
             log.error("잘못된 Jwt 서명입니다.");
