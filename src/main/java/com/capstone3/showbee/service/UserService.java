@@ -38,6 +38,7 @@ public class UserService {
     public User getUser(HttpServletRequest request){
         String token = jwtTokenProvider.resolveToken(request);
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
+        // 인증 토큰을 제공하는지 여부. boolean 값 반환
         return (User) authentication.getPrincipal();
     }
 

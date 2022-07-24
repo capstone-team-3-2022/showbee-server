@@ -23,16 +23,23 @@ public class ScheduleService {
     private final UserJpaRepository userJpaRepository;
     private final FinancialService financialService;
 
+    //
     @Transactional
     public Schedule save(HttpServletRequest request, final ScheduleDTO scheduleDTO) throws ParseException {
+        // userService의 getUser 호출
         User loginUser = userService.getUser(request);
+        // scheduleDTO에 loginUser 값을 저장하고 sch에도 저장
         Schedule sch = scheduleRepository.save(scheduleDTO.toEntity(loginUser));
+        // 만약 shared 값이 true라면
         if (scheduleDTO.toEntity(loginUser).getShared()) {
+            // email값을 participant에 넣기
             for (String email : scheduleDTO.getParticipant()) {
                 Shared sh = Shared.builder().user(userJpaRepository.findByEmail(email).get()).schedule(sch).build();
+                // user랑 schedule값 저장
                 sharedRepository.save(sh);
             }
         }
+        // user, schedule에 title
         return sch;
     }
 
@@ -109,7 +116,7 @@ public class ScheduleService {
         for (Schedule s : result) {
             LocalDate date = s.getDate();
             String stringDate = date.toString(); //가계부에 있는 데이터들의 날짜
-            int c = s.getCycle();
+            int c = s.getCycle(); // 몇 달마다 고정으로 지출되는걸 달마다 가지고 와서. 계산한게 범위내(해당 달)에 들어가면 맵에 넣어준다.
             while (stringDate.compareTo(nowDate) < 0) {
                 date = putCycle(date, c);
                 stringDate = date.toString();
