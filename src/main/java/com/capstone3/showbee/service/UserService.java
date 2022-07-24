@@ -53,7 +53,7 @@ public class UserService {
 
         //RefreshToken 저장
         RefreshToken refreshToken = RefreshToken.builder()
-                                    .key(user.getId()).token(tokenDTO.getRefreshToken()).build();
+                .key(user.getId()).token(tokenDTO.getRefreshToken()).build();
         refreshTokenRepository.save(refreshToken);
         return tokenDTO;
     }
@@ -132,7 +132,7 @@ public class UserService {
 
     public SingleResult<User> findUserByEmail(String email){
         return responseService.getSingleResult(userRepository.findByEmail(email)
-                                                .orElseThrow(CUserNotFoundException::new));
+                .orElseThrow(CUserNotFoundException::new));
     }
 
     public SingleResult<User> get(HttpServletRequest request){

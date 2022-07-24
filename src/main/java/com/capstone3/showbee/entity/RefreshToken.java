@@ -14,6 +14,7 @@ import java.util.StringTokenizer;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@AllArgsConstructor
 public class RefreshToken {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rid;
