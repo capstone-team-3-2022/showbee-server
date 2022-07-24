@@ -46,7 +46,7 @@ public class SignController {
         return ResponseEntity.ok(userService.checkEmailDuplicate(email));
     }
 
-    @PostMapping("/reissue") //access, refresh token 재발그 - access token 만료 시 회원 검증 후 refresh token 검증해서 access, refresh token 재발급
+    @PostMapping("/reissue") //access, refresh token 재발급 - access token 만료 시 회원 검증 후 refresh token 검증해서 access, refresh token 재발급
     public SingleResult<TokenDTO> reissue(@RequestBody TokenRequestDTO tokenRequestDTO){
         return responseService.getSingleResult(userService.reissue(tokenRequestDTO));
     }

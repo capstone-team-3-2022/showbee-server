@@ -49,13 +49,13 @@ public class JwtTokenProvider {
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setClaims(claims).setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + accessTokenValidTime))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .signWith(SignatureAlgorithm.HS256, secretKey.getBytes())
                 .compact();
 
         String refreshToken = Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setExpiration(new Date(now.getTime() + refreshTokenValidTime))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .signWith(SignatureAlgorithm.HS256, secretKey.getBytes())
                 .compact();
 
 
@@ -70,14 +70,20 @@ public class JwtTokenProvider {
         //jwt 에서 claims 추출
         Claims claims = parseClaims(token);
 
-        //권환 정보 x
+        //권한 정보 x
         if(claims.get(ROLES) ==null){
             throw new CAuthenticationEntryPointException();
         }
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
+//        UserDetails userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPK(token));
+
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
 
+    }
+
+    public String getUserPK(String token){
+        return (Jwts.parser().setSigningKey(secretKey.getBytes())).parseClaimsJws(token).getBody().getSubject();
     }
 
     //jwt 토큰 복호화
@@ -90,6 +96,7 @@ public class JwtTokenProvider {
     }
     // HTTP Request 의 Header 에서 Token Parsing -> "X-AUTH-TOKEN: jwt"
     public String resolveToken(HttpServletRequest request) {
+//        System.out.println(request.getHeader("X-AUTH-TOKEN"));
         return request.getHeader("X-AUTH-TOKEN");
     }
     //jwt 유효성 및 만료일자 확인
