@@ -14,6 +14,15 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.*;
 
+
+//To Do List
+//-------------------------
+// 공유 받은자가 공유 받은 목록 확인하기
+// 프론트엔드에서 notification message 주기별로 확인하기
+// fcm을 쓰는 방법과 android studio에서 알림을 생성하는 방법이 있음
+// fcm으로 주기적으로 알림을 생성하는 것을 구현할 예정
+
+
 @Service
 @AllArgsConstructor
 public class ScheduleService {
@@ -23,7 +32,7 @@ public class ScheduleService {
     private final UserJpaRepository userJpaRepository;
     private final FinancialService financialService;
 
-    //
+    // post
     @Transactional
     public Schedule save(HttpServletRequest request, final ScheduleDTO scheduleDTO) throws ParseException {
         // userService의 getUser 호출
@@ -43,33 +52,52 @@ public class ScheduleService {
         return sch;
     }
 
+    // getShared
     public List<Schedule> findShared(HttpServletRequest request) {
         User loginUser = userService.getUser(request);
+        // schedule db에서 모든 정보 가져오기
         List<Schedule> schl = scheduleRepository.findAllByUser(loginUser);
+        // schedules라는 새로운 리스트 만들기
         List<Schedule> schedules = new ArrayList<>();
+        // schedules에 schl 추가하기
         for (Schedule s : schl) {
             if (s.getShared()) schedules.add(s);
         }
+        // schedules 리스트 반환
         return schedules;
     }
 
+
+    // get
     public ScheduleDTO getById(Long sid) {
+        // Optional객체 s 생성
+        // null값이 아닌 Schedule 객체와 null 값을 모두 s에 불러오기
         Optional<Schedule> s = scheduleRepository.findById(sid);
+        // participant 리스트 새로 생성
         List<String> participant = new ArrayList<>();
+        // 만약 Schedule 객체 값이 null이 아니라면
         if (s.isPresent()) {
+            //s에 담긴 객체 값을 schedule에 저장
             Schedule schedule = s.get();
+            // schedule에 모든 값을 sresult에 담기
             List<Shared> sresult = sharedRepository.findAllBySchedule(schedule);
+            // sresult 값들을 하나씩 sh로 불러와서 participant에 넣기
             for (Shared sh : sresult) {
                 String uEmail = sh.getUser().getEmail();
                 participant.add(uEmail);
             }
+            // participant 리스트를 ScheduleToDTO에서 묶어서 schedule로 반환
             return schedule.ScheduleToDTO(participant);
+            // 만약 Optional 값이 null 이라면
         } else {
+            // null값 반환
             return null;
         }
     }
 
 
+    // list
+    // 이거 안쓰는 코드
     public List<Schedule> findAll(HttpServletRequest request) {
         User loginUser = userService.getUser(request);
         List<Schedule> result = scheduleRepository.findAllByUser(loginUser);
@@ -81,6 +109,8 @@ public class ScheduleService {
         return result;
     }
 
+
+    // delete
     public void deleteSch(Long sId) {
         List<Shared> sharedSch = sharedRepository.findAllBySchedule(scheduleRepository.getById(sId));
         for (Shared sh : sharedSch) {
@@ -91,6 +121,7 @@ public class ScheduleService {
         scheduleRepository.deleteById(sId);
     }
 
+    // modify
     public Schedule update(HttpServletRequest request, ScheduleDTO scheduleDTO) throws ParseException {
         Long sid = scheduleDTO.getSId();
         Optional<Schedule> result = scheduleRepository.findById(sid);
@@ -107,6 +138,7 @@ public class ScheduleService {
         return save(request, scheduleDTO);
     }
 
+    // getMonthly
     //inoutcome아니고 category
     public Map<String, List<String>> getCategoryMonthly(HttpServletRequest request, String nowDate) {
         Map<String, List<String>> monthlyMap = new TreeMap<>();
@@ -152,6 +184,7 @@ public class ScheduleService {
         return date;
     }
 
+    // getMonthlyTotal
     public int[] monthlyTotal(HttpServletRequest request, String nowDate) {
         String nextDate = financialService.getNextDate(nowDate);
         List<Schedule> result = findAll(request);
@@ -168,6 +201,7 @@ public class ScheduleService {
         return new int[]{income, outcome};
     }
 
+    // getlist
     public Map<String, List<MonthlySchedule>> getMonthList(HttpServletRequest request, String nowDate) {
         Map<String, List<MonthlySchedule>> gets = new TreeMap<>();
         User loginUser = userService.getUser(request);
@@ -200,4 +234,18 @@ public class ScheduleService {
 
         return gets;
     }
+
+    // 공유된 거 불러오기
+    public List<Schedule> ShareList(HttpServletRequest request) {
+        User loginUser = userService.getUser(request);
+        // 공유된 것만 보기
+        List<Schedule> result = new ArrayList<>();
+        List<Shared> sresult = sharedRepository.findAllByUser(loginUser);
+        for (Shared sh : sresult) {
+            Schedule schedule = sh.getSchedule();
+            result.add(schedule);
+        }
+        return result;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.capstone3.showbee.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import java.util.StringTokenizer;
 @Getter
 @NoArgsConstructor
 @Builder
+@AllArgsConstructor
 public class RefreshToken {
     @Id
     private String rId;

@@ -11,5 +11,4 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     Optional<Schedule> findByStitle(String stitle);
     // findAllByUser : 전체 레코드 불러오기. 정렬(sort), 페이징(pageable) 가능
     List<Schedule> findAllByUser(User user);
-
 }
