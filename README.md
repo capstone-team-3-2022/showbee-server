@@ -55,7 +55,7 @@ port: 8081
 117.17.102.143:8081/
   
     
-    Header에 토큰 값: “X-AUTH-TOKEN” value에 로그인 했을 때의 token 값 넣기
+    Header에 토큰 값: “X-AUTH-TOKEN” value에 로그인 했을 때의 access token 값 넣기
 
 
 ## User
@@ -76,7 +76,12 @@ port: 8081
 - 형식: POST
 - Query: email, password
 - 주소: v1/signin
-- Token 값 반환
+- 반환
+    - accessToken value
+    - refreshToken value
+    - grantType: "Bearer"
+    - accessTokenExpired: AccessToken 만료 시간 (milisecond 기준)
+
 
 ### 조회
 - 형식: GET
