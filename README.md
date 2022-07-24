@@ -117,7 +117,7 @@ port: 8081
     
 ### post
 - 형식: POST
-- Body: stitle(String), content(String), price(int), date(Date), cycle(int), shared(boolean), participant(List), inoutcome(boolean)
+- Body: stitle(String), content(String), price(int), date(Date), cycle(int), shared(boolean), participant(List), inoutcome(boolean), category(String)
 - 주소: v1/schedule/post
 - Header에 유저 로그인 토큰 필요
 - 파라미터 설명 db 테이블 참고
