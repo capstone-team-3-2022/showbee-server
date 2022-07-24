@@ -76,7 +76,7 @@ public class ScheduleController {
     }
 
     @GetMapping("/getShareList") //공유 받은 일정만
-    public List<Schedule> ShareList(HttpServletRequest request){
+    public List<ScheduleDTO> ShareList(HttpServletRequest request){
         return scheduleService.ShareList(request);
     }
 

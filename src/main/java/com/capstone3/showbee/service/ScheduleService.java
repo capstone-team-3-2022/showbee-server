@@ -109,6 +109,20 @@ public class ScheduleService {
         return result;
     }
 
+    public ScheduleDTO getParticipant(Schedule schedule) {
+        List<String> pemail = new ArrayList<>();
+        ScheduleDTO sdto = null;
+        if (schedule.getShared()) {
+            pemail.add(schedule.getUser().getEmail());
+            List<Shared> slist = sharedRepository.findAllBySchedule(schedule);
+            for (Shared sh : slist) {
+                pemail.add(sh.getUser().getEmail());
+            }
+            sdto = schedule.ScheduleToDTO(pemail);
+        }
+        return sdto;
+    }
+
 
     // delete
     public void deleteSch(Long sId) {
@@ -222,7 +236,7 @@ public class ScheduleService {
                     MonthlySchedule ms = MonthlySchedule.builder()
                             .price(s.getPrice()).sid(s.getSId()).stitle(s.getStitle()).build();
                     if (gets.containsKey(day)) msl = gets.get(day);
-                     else msl = new ArrayList<>();
+                    else msl = new ArrayList<>();
 
                     msl.add(ms);
                     gets.put(day, msl);
@@ -236,14 +250,16 @@ public class ScheduleService {
     }
 
     // 공유된 거 불러오기
-    public List<Schedule> ShareList(HttpServletRequest request) {
+    public List<ScheduleDTO> ShareList(HttpServletRequest request) {
         User loginUser = userService.getUser(request);
         // 공유된 것만 보기
-        List<Schedule> result = new ArrayList<>();
+        List<ScheduleDTO> result = new ArrayList<>();
         List<Shared> sresult = sharedRepository.findAllByUser(loginUser);
+        List<String> participant = new ArrayList<>();
         for (Shared sh : sresult) {
             Schedule schedule = sh.getSchedule();
-            result.add(schedule);
+            participant.add(schedule.getUser().getEmail());
+            result.add(getParticipant(schedule));
         }
         return result;
     }
