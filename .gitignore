@@ -1,12 +1,13 @@
 HELP.md
 .gradle
-build.gradle
+/build.gradle
 build/
 build/**
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-**/src/main/resources/application.properties
+
+/src/main/resources/application.properties
 README.md
 ### STS ###
 .apt_generated
