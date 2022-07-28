@@ -27,7 +27,6 @@ README.md
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
-build/**
 
 ### IntelliJ IDEA ###
 .idea/
