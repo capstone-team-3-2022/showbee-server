@@ -47,12 +47,11 @@
 
 ----
 ## Server
-ip address: 117.17.102.143
+
     
 port: 8081
     
 주소
-117.17.102.143:8081/
     
     - token 유지 시간
     - access Token: 1시간
