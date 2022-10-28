@@ -8,7 +8,6 @@ import com.capstone3.showbee.model.SingleResult;
 import com.capstone3.showbee.repository.UserJpaRepository;
 import com.capstone3.showbee.service.ResponseService;
 import com.capstone3.showbee.service.UserService;
-import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;

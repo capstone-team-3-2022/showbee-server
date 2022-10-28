@@ -1,21 +1,23 @@
 package com.capstone3.showbee.model;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Getter
 @Setter
+@Tag(name = "CommonResult")
 public class CommonResult {
 
-    @ApiModelProperty(value = "응답 성공 여부: true/false")
+    @Schema(description = "응답 성공 여부: true/false")
     private boolean success;
 
-    @ApiModelProperty(value = "응답 코드 번호: >0 정상, <0 비정상")
+    @Schema(description = "응답 코드 번호: >0 정상, <0 비정상")
     private int code;
 
-    @ApiModelProperty(value = "응답 메시지 ")
+    @Schema(description = "응답 메시지 ")
     private String msg;
 }

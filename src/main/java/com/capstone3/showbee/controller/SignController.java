@@ -13,7 +13,6 @@ import com.capstone3.showbee.repository.UserJpaRepository;
 import com.capstone3.showbee.service.CustomUserDetailService;
 import com.capstone3.showbee.service.ResponseService;
 import com.capstone3.showbee.service.UserService;
-import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
