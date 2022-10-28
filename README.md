@@ -13,16 +13,32 @@
 ### 프로젝트 시작
 2022-04-01 ~ 현재 진행중
 
-### 사용기술
-Spring boot
+## 사용기술
+### Spring boot
+![image](https://user-images.githubusercontent.com/55172514/198556396-c1344c68-d61c-46f9-876e-0a5c3e217c41.png)
 
-MySQL
+- JWT
+- Spring JPA
+- Spring Security
+- REST API
+
+
+### MySQL
+![image](https://user-images.githubusercontent.com/55172514/198556607-ecd7ff06-9cf1-4d37-9b9d-51e3c68ed8a2.png)
+
+서버는 우분투 환경
 
 
 ### 앱 디자인
 ![image](https://user-images.githubusercontent.com/52189097/161251002-540b2276-21bb-4200-b4d9-1f03d6f20b91.png)
 ![image](https://user-images.githubusercontent.com/52189097/161251019-97434ee7-f0b9-4918-a8e8-f3d0cbdd0c2d.png)
 
+
+## API Document
+서버주소:포트번호/swagger-ui-custom.html
+
+
+---
 : api 설명 바로가기 
 1. [User](https://github.com/capstone-team-3-2022/showbee-server/blob/main/README.md#user)
 2. [Schedule](https://github.com/capstone-team-3-2022/showbee-server/blob/main/README.md#schedule)
