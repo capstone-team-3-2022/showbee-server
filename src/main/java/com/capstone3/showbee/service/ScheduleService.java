@@ -15,14 +15,6 @@ import java.time.LocalDate;
 import java.util.*;
 
 
-//To Do List
-//-------------------------
-// 공유 받은자가 공유 받은 목록 확인하기
-// 프론트엔드에서 notification message 주기별로 확인하기
-// fcm을 쓰는 방법과 android studio에서 알림을 생성하는 방법이 있음
-// fcm으로 주기적으로 알림을 생성하는 것을 구현할 예정
-
-
 @Service
 @AllArgsConstructor
 public class ScheduleService {
@@ -43,7 +35,6 @@ public class ScheduleService {
                 sharedRepository.save(sh);
             }
         }
-        // user, schedule에 title
         return sch;
     }
 
