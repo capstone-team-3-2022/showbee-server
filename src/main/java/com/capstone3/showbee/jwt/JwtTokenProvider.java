@@ -34,7 +34,7 @@ public class JwtTokenProvider {
     @PostConstruct
     protected void init(){
         //암호화
-        secretKey = Base64UrlCodec.BASE64URL.encode(secretKey.getBytes(StandardCharsets.UTF_8));
+        secretKey = Base64UrlCodec.BASE64URL.encode(secretKey.getBytes());
 
     }
 
